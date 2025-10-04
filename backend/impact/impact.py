@@ -62,21 +62,21 @@ def v_at_altitude(v0, L0, Ui, T, z, C_D=1.0, p0=1.2250, H=8000):
 def breakup_strength(Ui):
     """
     Returns the breakup strength of an impactor with a given pressure
-    under atmospheric pressure
 
+    under atmospheric pressure
     The empirical formula is given as:
     Eq 3: log10 Yi = 2.107 + 0.0624Ui^1/2
     """
     return 10 ** (2.107 + 0.0624 * Ui ** (1 / 2.0))
 
 
-def altitude_of_breakup(L0, v0, Ui, T, C_D=1.0, H=8000):
+def altitude_of_breakup(L0, v0, Ui, T, C_D=1.0, H=8000, p0=1.2250):
     """
     Returns altitude at which the impactor will break up.
 
     Combination of two formulas
     Eq 4:
-        a. z* = -H(ln(Yi/U0*v0^2) + 1.308 + 0.314If - 1.303 sqrt(1 - If))
+        a. z* = -H(ln(Yi/p0*v0^2) + 1.308 + 0.314If - 1.303 sqrt(1 - If))
         where If:
         b. If = 4.07 (C_D*H*Yi)/(Ui*L0*v0^2*sin(T))
 
@@ -85,9 +85,11 @@ def altitude_of_breakup(L0, v0, Ui, T, C_D=1.0, H=8000):
 
     Yi = breakup_strength(Ui)
     If = 4.07 * (C_D * H * Yi) / (Ui * L0 * v0**2 * math.sin(deg2rad(T)))
-    if If >= 1:
+    if If >= 1 or If <= 0:
         return 0
-    return -H * (math.log(Yi / v0**2) + 1.308 + 0.314 * If - 1.303 * math.sqrt(1 - If))
+    return -H * (
+        math.log(Yi / p0 * v0**2) + 1.308 + 0.314 * If - 1.303 * math.sqrt(1 - If)
+    )
 
 
 # --------------------- 3. CRATER -----------------------------------
@@ -183,8 +185,8 @@ def thermal_exposure(E, r, K=3e-3):
 
 def seismic_magnitude(E):
     """
-    Returns seismic magnitude for a given impact energy
     Eq 11: M = 0.67 * log10(E) - 5.87
+    Returns seismic magnitude for a given impact energy
     """
 
     if E == 0:
@@ -199,14 +201,14 @@ def effective_magnitude(M, r):
     Eq 12
         a: M_eff = M - 0.0238r (r < 60km)
         b: M_eff = 0.0048r - 1.1644 (60km <= r < 700km)
-        c: M_eff = M - 1.66log(r/R_earth) - 6.399 (700km <= r)
+        c: M_eff = M - 1.66log10(r/R_earth) - 6.399 (700km <= r)
     """
 
     if r < 60:
         return M - 0.0238 * r
     if 60 <= r < 700:
         return 0.0048 * r - 1.1644
-    return M - 1.66 * math.log(r / R_earth) - 6.399
+    return M - 1.66 * math.log10(r / R_earth) - 6.399
 
 
 # ---------------- 6. EJECTA ----------------------------------
@@ -247,7 +249,7 @@ def scaled_dist(r, E):
     return r / E_kT ** (1 / 3)
 
 
-def surface_blast(r1, px=7500, rx=290):
+def surface_blast(r1, px=75000, rx=290):
     """
     Returns the peak overpressure from a crater impact or a Mach reflection region airburst
     Eq 16: p(r1) = px*rx/4r1 (1 + 3(rx/r1)^1.3)
@@ -275,7 +277,7 @@ def peak_vel(p, P0=1.01325, c0=343):
     returns the peak wind velocity given a peak overpressure
     Eq 18: u = 5p/7P0 * c0/(1 + 6p/7P0)^0.5
     """
-    return 5 * p / 7 * P0 * c0 / (1 + 6 * p / 7 * P0) ** 0.5
+    return (5 * p / 7 * P0) * (c0 / (1 + 6 * p / 7 * P0) ** 0.5)
 
 
 # ----------------- 8. TSUNAMI (TBC) ---------------------
