@@ -1,126 +1,173 @@
-## 🔭 1. Clarify the Problem
+🚀 Hackathon Battle Plan: Meteor Madness (Impactor-2025)
+1️⃣ Define the Scope (Don’t Overbuild)
 
-- **Restate the challenge** in your own words (one liner).
-    
-- Write down: _“We want to help ___ by solving ___ using ___.”_
-    
-- Define **core outputs**: is it a website, dashboard, app, data viz, simulation, or concept demo?
-    
+The challenge sounds huge (orbital mechanics, geology, tsunamis, mitigation strategies). In a hackathon, you should aim for a Minimum Viable Demo (MVD):
 
----
+Input: Asteroid parameters (size, velocity, trajectory).
 
-## 🎨 2. Branding & Visual Identity
+Processing: Estimate impact energy + basic consequences.
 
-Keep it simple, consistent, and thematic. For “Meteor Madness”:
+Output: A simple, beautiful, interactive visualization (map + orbital animation).
 
-- **Colours**:
-    
-    - ~~Primary: Deep Space Navy (`#0B132B`)
-        
-    - ~~Accent 1: Meteor Orange (`#FF6B35`)
-        
-    - ~~Accent 2: Plasma Blue (`#3A86FF`)
-        
-    - ~~Neutral: Light Grey (`#F5F5F5`) for backgrounds
-        
-- **Fonts**:
-    
-    - Header: ~~Orbitron or Montserrat (futuristic/clean)
-        
-    - Body: ~~Inter or Roboto (legible)
-        
-- **Mood**: Futuristic, urgent, but approachable.
-    
+Extras (if time): Add mitigation slider (e.g., deflect asteroid by X m/s → new path).
 
----
+2️⃣ Branding & Theme
 
-## 🖥 3. Design Process
+Keep it visually cohesive:
 
-- **User Flow**: Sketch the _main journey_ (e.g., user logs in → sees meteor risk map → explores data → gets recommendations).
-    
-- **Wireframe** (quick Figma/pen sketch): Focus on function first, pretty later.
-    
-- **UI Elements**: Cards, map visualisations, progress bars, warning indicators.
-    
+Name idea: “Asteroid Impact Simulator (AIS)” or more fun like “Deflect 2025.”
 
----
+Colour Palette (space + meteor theme):
 
-## 💻 4. Coding & Tech
+Deep Space Navy #0B132B
 
-Depends on your team’s strengths:
+Meteor Orange #FF6B35
 
-- **Frontend (fast prototyping)**: React + Tailwind (easy styling, responsive)
-    
-- **Backend (if needed)**: Flask/FastAPI for quick APIs
-    
-- **Data**: NASA APIs (e.g., Near Earth Object API), Open Meteo, or CSV datasets
-    
-- **Visualisations**: Recharts, D3.js, or Plotly for graphs; Leaflet/Mapbox for maps
-    
-- **AI/ML (optional)**: Simple regression/classification for meteor impact prediction, or clustering past meteor events.
-    
+Plasma Blue #3A86FF
 
----
+Neutral Grey #E5E5E5
 
-## 📊 5. Problem Analysis (Meteor Madness Angle)
+Fonts: Orbitron (headers) + Inter/Roboto (body).
 
-Think about impact + audience:
+UI vibe: NASA-inspired, clean, black-background dashboards with glowing accents.
 
-- **Who cares?** (General public, scientists, schools, policymakers?)
-    
-- **What’s the gap?** (Awareness, education, prediction, visualization, emergency response)
-    
-- **What’s your edge?**
-    
-    - Eg: “We make meteor risk understandable to non-scientists with real-time visualisation.”
-        
-    - Or: “We predict near-Earth meteors & simulate impact zones for disaster planning.”
-        
+3️⃣ Technical Stack (Fast & Lightweight)
 
----
+Frontend: React + Tailwind (fast styling, responsive).
 
-## ⏱ 6. Time Management (24-48h hackathon rhythm)
+3D/2D Viz: Three.js (orbital paths), D3.js or Leaflet (impact maps).
 
-- **Hour 1-3**: Align on problem, audience, and decide final idea.
-    
-- **Hour 4-6**: Build skeleton (basic UI, API connections, mock data).
-    
-- **Hour 7-18**: Coding sprint (split tasks: frontend, backend, data).
-    
-- **Hour 19-22**: Polish UI, add branding, make demo presentable.
-    
-- **Hour 23-24**: Final pitch deck + dry run.
-    
+Backend (optional, only if needed): Flask/FastAPI in Python for heavy calcs.
 
----
+Data Sources:
 
-## 📢 7. Presentation & Pitch
+NASA NEO API → asteroid size, velocity, orbit.
 
-Judges care about clarity, not just code.
+USGS topo/elevation datasets → tsunami risk or terrain visualization (can mock if time is short).
 
-- **Hook**: “Meteors are rare but deadly. What if everyone could understand the risk in real time?”
-    
-- **Demo**: Live walkthrough of your app (2–3 minutes).
-    
-- **Impact**: Why this matters (education, awareness, disaster readiness).
-    
-- **Future Vision**: How it could scale or integrate with NASA/open data.
-    
+4️⃣ Core Features (Hackathon-Friendly)
+Must-Haves ✅
 
----
+Input asteroid size, velocity, trajectory (via sliders or default “Impactor-2025” dataset).
 
-✅ Checklist for your team tomorrow:
+Simulate kinetic energy → estimate crater size, seismic magnitude.
 
--  Problem statement + target audience
-    
--  Brand kit (colours/fonts ready)
-    
--  Quick wireframes
-    
--  Pick tech stack + split coding tasks
-    
--  Find relevant NASA dataset/API
-    
--  Demo-first mindset (make sure it runs smoothly!)
-    
--  Slide deck with visuals + story
+Visualize:
+
+3D orbit around Earth → asteroid path
+
+2D map → potential impact site + risk zone
+
+Nice-to-Haves ⭐
+
+Deflection strategies (user adjusts velocity → orbit shifts).
+
+Tsunami overlay (if impact in ocean).
+
+Pop-up tooltips explaining physics terms in plain English.
+
+Stretch Goals 🚀
+
+Gamified “Defend Earth” mode → user must choose mitigation within time.
+
+Social shareable impact maps.
+
+Mobile version.
+
+5️⃣ Simplified Physics Models (Good Enough for Demo)
+
+Impact Energy (Joules):
+
+𝐸
+=
+1
+2
+𝑚
+𝑣
+2
+E=
+2
+1
+	​
+
+mv
+2
+
+where 
+𝑚
+=
+4
+3
+𝜋
+𝑟
+3
+𝜌
+m=
+3
+4
+	​
+
+πr
+3
+ρ (ρ ≈ 3000 kg/m³).
+
+Crater Diameter Estimate:
+
+𝐷
+≈
+1.161
+×
+𝐸
+0.294
+D≈1.161×E
+0.294
+ (scaling law).
+
+Tsunami Trigger: If impact zone = ocean → show expanding concentric rings overlay on map.
+
+Mitigation (deflection): Simple velocity change (
+Δ
+𝑣
+Δv) shifts orbit → show new trajectory line.
+
+These don’t need to be perfect, just consistent. Judges like plausible science, not full PhD accuracy.
+
+6️⃣ User Flow
+
+Landing: “Meet Impactor-2025” (intro screen with asteroid facts).
+
+Input Panel: Size, velocity, impact location, or deflection strategy.
+
+Simulation: Animated orbit → collision with Earth.
+
+Results Dashboard: Impact energy (TNT equivalent), crater size, seismic magnitude, tsunami risk.
+
+Mitigation Mode: User tries deflection → new orbit vs. Earth.
+
+7️⃣ Pitch / Storytelling
+
+Hook: “In 2025, Impactor-2025 could hit Earth. What happens next?”
+
+Problem: Data exists, but it’s siloed and inaccessible to the public/policymakers.
+
+Solution: A visual, interactive, scientifically-grounded simulator that makes impact risks understandable and lets users test mitigation strategies.
+
+Demo: Show simulation (default asteroid, then adjust variables).
+
+Impact: Bridges science ↔ public ↔ decision makers.
+
+Vision: Scalable to all near-Earth asteroids, real-time NASA/USGS integration.
+
+8️⃣ Hackathon Time Management
+
+Hour 1–2: Team alignment → roles (frontend, backend, design, pitch).
+
+Hour 3–5: Build UI skeleton + mock data.
+
+Hour 6–12: Integrate NASA NEO API, set up orbital + impact visualizations.
+
+Hour 13–18: Add deflection logic + polishing.
+
+Hour 19–22: UX polish, branding, storytelling, make demo smooth.
+
+Hour 23–24: Pitch deck + practice.
