@@ -7,13 +7,42 @@
     <link rel="stylesheet" href="src/style.css" />
   </head>
   <body>
+    <!-- particles -->
     <div class="fixed h-full w-full" id="particles-js"></div>
-    <section
-      class="fixed h-full w-full z-100"
-      id="main-wrapper"
-    >
-      <h1 class="font-bold text-sm">test</h1>
-      <button>hehehehe</button>
+
+    <!-- decorative elements -->
+    <div class="-left-36 -top-40 fixed lg:-left-5 lg:-top-5">
+      <div
+        class="w-64 h-64 rounded-full bg-[#B2D53C] opacity-70 blur-3xl"
+      ></div>
+      <div
+        class="w-56 h-56 rounded-full bg-[#49C2EE] relative z-10 opacity-70 -mt-24 ml-24 blur-3xl"
+      ></div>
+    </div>
+
+    <div class="-right-20 -bottom-20 fixed lg:-right-10 lg:bottom-20">
+      <div
+        class="w-56 h-56 rounded-full bg-[#49C2EE] opacity-70 blur-3xl"
+      ></div>
+      <div
+        class="w-72 h-72 rounded-full bg-[#FCFCFC] relative z-10 opacity-70 -mt-24 -ml-24 blur-3xl"
+      ></div>
+    </div>
+
+    <!-- main wrapper -->
+    <section class="fixed h-full w-full z-100" id="main-wrapper">
+      <div
+        class="flex items-center justify-center w-full h-full flex-col max-w-sm mx-auto"
+      >
+        <h1 class="font-bold text-4xl">Welcome to Deja!</h1>
+        <p class="mt-2 text-center"
+          >An interactive visualization of real life past and future meteor
+          impact.</p
+        >
+        <button class="mt-10 px-4 py-2 bg-slate-50 text-slate-800 rounded-2xl"
+          ><a href="#">Start</a></button
+        >
+      </div>
     </section>
 
     <!-- scripts -->
