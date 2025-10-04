@@ -3,7 +3,7 @@ import math
 R_earth = 6371000.0  # Earth's radius in m
 G = 9.81  # Gravity of Earth in m/s^2
 RHO_W = 1025.0  # Seawater density in kg/m^3
-JpkT = 4184e12  # 1 megaton of TNT in joules
+JpkT = 4.184e12  # 1 megaton of TNT in joules
 
 
 # Utils
@@ -59,6 +59,15 @@ def v_at_altitude(v0, L0, Ui, T, z, C_D=1.0, p0=1.2250, H=8000):
     )
 
 
+def energy_at_altitude(v, v0, E0):
+    """
+    Returns the intact flight approximation of energy at a given altitude.
+    Eq A: E = E0 * (v/v0)^2
+    """
+
+    return E0 * (v / v0) ** 2
+
+
 def breakup_strength(Ui):
     """
     Returns the breakup strength of an impactor with a given pressure
@@ -88,7 +97,7 @@ def altitude_of_breakup(L0, v0, Ui, T, C_D=1.0, H=8000, p0=1.2250):
     if If >= 1 or If <= 0:
         return 0
     return -H * (
-        math.log(Yi / p0 * v0**2) + 1.308 + 0.314 * If - 1.303 * math.sqrt(1 - If)
+        math.log(Yi / (p0 * v0**2)) + 1.308 + 0.314 * If - 1.303 * math.sqrt(1 - If)
     )
 
 
@@ -143,7 +152,7 @@ def complex_crater_depth(D_fr):
     Eq 7: d_fr = 0.294 * D_fr^0.301
     """
 
-    return 0.294 * D_fr**0.301
+    return 294 * (D_fr / 1000) ** 0.301
 
 
 def simple_crater_depth(D_fr):
@@ -173,11 +182,12 @@ def thermal_exposure(E, r, K=3e-3):
     Eq 10: θ = K * E / (2 pi r^2)
     K is luminous efficiency
     Result in J/m^2
+    (r is in km, need to change to m)
     """
 
     if r == 0:
         return float("inf")
-    return K * E / (2 * math.pi * r**2)
+    return (K * E) / (2 * math.pi * (r * 1000) ** 2)
 
 
 # ------------------ 5. EARTHQUAKE ------------------------------
@@ -200,15 +210,15 @@ def effective_magnitude(M, r):
     depending on the distance:
     Eq 12
         a: M_eff = M - 0.0238r (r < 60km)
-        b: M_eff = 0.0048r - 1.1644 (60km <= r < 700km)
+        b: M_eff = M - (0.0048r - 1.1644) (60km <= r < 700km)
         c: M_eff = M - 1.66log10(r/R_earth) - 6.399 (700km <= r)
     """
 
     if r < 60:
         return M - 0.0238 * r
     if 60 <= r < 700:
-        return 0.0048 * r - 1.1644
-    return M - 1.66 * math.log10(r / R_earth) - 6.399
+        return M - (0.0048 * r - 1.1644)
+    return M - 1.66 * math.log10(r * 1000 / R_earth) - 6.399
 
 
 # ---------------- 6. EJECTA ----------------------------------
@@ -218,10 +228,11 @@ def ejecta_thickness(D_tc, r):
     """
     Returns ejecta thickness
     Eq 13: t_e = D_tc^4 / (112 * r^3)
+    (r is in km, need to convert to m)
     """
     if r == 0:
         return float("inf")
-    return D_tc**4 / (112 * r**3)
+    return D_tc**4 / (112 * (r * 1000) ** 3)
 
 
 def mean_ejecta_size(D_fr, r, alpha=2.65):
@@ -230,9 +241,12 @@ def mean_ejecta_size(D_fr, r, alpha=2.65):
     Eq 14a: D_e = dc(D_fr / (2 * r))^alpha
     where dc is defined as:
     Eq 14b: dc = 2400(D_fr/2)^-1.62
-    """
 
-    return 2400 * D_fr**-1.62 * (D_fr / (2 * r)) ** alpha
+    """
+    if r == 0:
+        return float("inf")
+
+    return 2400 * (D_fr / 1000) ** -1.62 * ((D_fr / 1000) / (2 * r)) ** alpha
 
 
 # ------------------- 7. AIRBLAST  -------------------------
@@ -240,13 +254,14 @@ def mean_ejecta_size(D_fr, r, alpha=2.65):
 
 def scaled_dist(r, E):
     """
-    Returns scaled distance for airblast
+    Returns scaled distance for airblast to 1kt equivalent
     Eq 15: r1 = r / E_kT^(1/3)
     E_kT is kinetic energy in kT of TNT
+    (r in km, so must convert to m)
     """
 
     E_kT = joules2ktons(E)
-    return r / E_kT ** (1 / 3)
+    return r * 1000 / E_kT ** (1 / 3)
 
 
 def surface_blast(r1, px=75000, rx=290):
@@ -255,7 +270,9 @@ def surface_blast(r1, px=75000, rx=290):
     Eq 16: p(r1) = px*rx/4r1 (1 + 3(rx/r1)^1.3)
     """
 
-    return px * rx / (4 * r1) * (1 + 3 * (rx / r1) ** 1.3)
+    if r1 == 0:
+        return float("inf")
+    return ((px * rx) / (4 * r1)) * (1 + 3 * ((rx / r1) ** 1.3))
 
 
 def airblast(r1, zb):
@@ -272,14 +289,62 @@ def airblast(r1, zb):
     return p0 * math.exp(-beta * r1)
 
 
-def peak_vel(p, P0=1.01325, c0=343):
+def peak_vel(p, P0=101325, c0=343):
     """
     returns the peak wind velocity given a peak overpressure
     Eq 18: u = 5p/7P0 * c0/(1 + 6p/7P0)^0.5
     """
-    return (5 * p / 7 * P0) * (c0 / (1 + 6 * p / 7 * P0) ** 0.5)
+
+    factor = (5.0 * p) / (7.0 * P0)
+    denom_sqrt = math.sqrt(1.0 + (6.0 * p) / (7.0 * P0))
+    return factor * c0 / denom_sqrt
 
 
 # ----------------- 8. TSUNAMI (TBC) ---------------------
 
+
 # ------------------- MAIN -----------------------------
+def main(L0, Ui, v0, T, Uj):
+    E0 = k_energy(L0, Ui, v0)
+    v_ground = v_at_altitude(v0, L0, Ui, T, 0)
+    E = energy_at_altitude(v_ground, v0, E0)
+
+    D_tc = transient_crater_diameter(L0, Ui, Uj, v_ground, T)
+    crater_diamater = final_crater_diameter(D_tc)
+
+    if D_tc < 2560:
+        crater_depth = simple_crater_depth(crater_diamater)
+    else:
+        crater_depth = complex_crater_depth(crater_diamater)
+    fball_radius = fireball_radius(E0)
+    M = seismic_magnitude(E)
+
+    r_effects = dict()
+
+    for r in range(0, 20000, 1):
+        thermal = thermal_exposure(E, r)
+        effective_M = effective_magnitude(M, r)
+        mmi = min(12, math.floor(effective_M))
+
+        thickness = ejecta_thickness(D_tc, r)
+        mean_size = mean_ejecta_size(crater_diamater, r)
+        dist = scaled_dist(r, E)
+
+        blast = surface_blast(dist)
+        peak_wind_vel = peak_vel(blast)
+
+        r_effects[r] = {
+            "thermal_exposure": thermal,
+            "effective_magnitude": effective_M,
+            "effective_mmi": mmi,
+            "ejecta_thickness": thickness,
+            "mean_ejecta_size": mean_size,
+            "surface_blast": blast,
+            "peak_wind_vel": peak_wind_vel,
+        }
+
+    return E0, E, v_ground, crater_diamater, crater_depth, fball_radius, r_effects
+
+
+if __name__ == "__main__":
+    main(1500, 3000, 19000, 45, 2500)
