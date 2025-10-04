@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Select an asteroid - Deja</title>
     <link rel="stylesheet" href="src/style.css" />
+    
   </head>
   <body>
     <!-- particles -->
@@ -30,18 +31,27 @@
     </div>
 
     <section
-      class="flex justify-center flex-col gap-4 max-w-5xl mx-auto pt-10"
+      class="flex justify-center flex-col gap-4 max-w-5xl mx-auto py-10"
       id="main-wrapper"
     >
-      <h1 class="text-5xl font-light">Select an Asteroid</h1>
-      <h2 class="text-2xl mt-10"
-        >Notable Asteroid Impacts in Earth's History</h2
-      ></section
-    >
+            <a
+          href="./"
+          class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-110 duration-100 z-10"
+          >&lt; Return</a
+        >
+      <h1 class="text-5xl font-light">Select a Near Earth Asteroid</h1>
+      <!-- <h2 class="text-2xl mt-10">Notable Asteroid Impacts in Earth's History</h2
+      > -->
+      <div
+        id="carousel-wrapper"
+        class="carousel h-full"
+        data-flickity='{ "wrapAround": true }'
+      >
+      </div
+    ></section>
 
     <!-- scripts -->
     <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <!-- stats.js lib -->
-    <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
-    <script src="src/particles.js"></script> </body
-></html>
+    <script src="src/particles.js"></script>
+    <script src="src/asteroid.js"></script>
+</html>
