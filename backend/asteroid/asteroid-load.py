@@ -36,12 +36,34 @@ def update_db():
         fullname, spkid, _, pha, e, a, ma, i, om, w = item
         spkid = int(spkid)
         fullname = fullname.strip()
-        a = float(a)
-        e = float(e)
-        i = float(i)
-        om = float(om)
-        w = float(w)
-        ma = float(ma)
+        def safe_float(x):
+    try:
+        return float(x)
+    except (ValueError, TypeError):
+        return None
+
+for item in tqdm(data, desc="Loading data"):
+    fullname, spkid, _, pha, e, a, ma, i, om, w = item
+
+    spkid = int(spkid)
+    
+    fullname = fullname.strip().title()
+
+    # Convert numbers safely
+    a = safe_float(a)
+    e = safe_float(e)
+    i = safe_float(i)
+    om = safe_float(om)
+    w = safe_float(w)
+    ma = safe_float(ma)
+    
+    if a is None or a <= 0:
+        continue
+    if e is None or not (0 <= e < 2):
+        continue
+    if i is None or not (0 <= i <= 180):
+        continue
+       
         pha = pha == "Y"
 
         c.execute(
