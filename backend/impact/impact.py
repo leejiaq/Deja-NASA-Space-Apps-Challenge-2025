@@ -165,39 +165,6 @@ def swarm_velocity_at_alt(
     )
 
 
-def swarm_velocity_at_zero(v0, L0, z_star, Ui, T, H=8000, C_D=1.0, p0=1.2250):
-    """
-    Returns the swarm velocity of the impactor IF complete_breakup_height returns 0
-    Eq 7a: v(z) = v(z*)exp(-3/4 * ((C_D * exp(-z*/H)) / (Ui * L0^3 * sinT)) * int_z^z* (e^((z* - z)/H) * L(z)^2) dz)
-    sub z = 0
-    Eq 7b : v(0) = v(z*)exp(-3/4 * ((C_D * exp(-z*/H)) / (Ui * L0^3 * sinT)) * (H^3 * L0^2)/3l^2 * (3(4 + (l/H)^2) exp(z*/H) + 6exp(2z*/H) - 16exp(3z*/2H) - 3(l/H)^2 - 2))
-    where l is defined as:
-    Eq: 7c: l = L0*sinT*sqrt(Ui/(C_D*exp(-z*/H))
-    """
-
-    vel_at_z_star = v_at_altitude(v0, L0, Ui, T, z_star)
-
-    l_disp = L0 * math.sin(deg2rad(T)) * math.sqrt(Ui / (C_D * math.exp(-z_star / H)))
-
-    factor = (
-        (H**3 * L0**2)
-        / (3 * l_disp**2)
-        * (
-            3 * (4 + (l_disp / H) ** 2) * math.exp(z_star / H)
-            + 6 * math.exp(2 * z_star / H)
-            - 16 * math.exp(3 * z_star / (2 * H))
-            - 3 * (l_disp / H) ** 2
-            - 2
-        )
-    )
-    exp_arg = (
-        -3 / 4 * (C_D * math.exp(-z_star / H)) / (Ui * L0**3 * math.sin(T)) * factor
-    )
-    vel_at_zero = vel_at_z_star * math.exp(exp_arg)
-
-    return vel_at_zero
-
-
 # --------------------- 3. CRATER -----------------------------------
 
 
@@ -418,12 +385,12 @@ def main(L0, Ui, v0, T, Uj):
         zb = complete_breakup_height(L0, z_star, Ui, T)
         if zb != 0:
             v_zb = swarm_velocity_at_alt(v0, L0, z_star, Ui, T, zb)
-            E = energy_at_altitude(v0 - v_zb, v0, E0)
+            E = energy_at_altitude(v_zb, v0, E0)
             E_air = E
             E_ground = 0.0
         else:
             L = length_at_alt(L0, z_star, Ui, T, 0)
-            v_ground = swarm_velocity_at_zero(v0, L0, z_star, Ui, T)
+            v_ground = swarm_velocity_at_alt(v0, L0, z_star, Ui, T, 0)
             E_ground = energy_at_altitude(v_ground, v0, E0)
             E_air = E0 - E_ground
             E = max(E_air, E_ground)
@@ -528,7 +495,7 @@ if __name__ == "__main__":
         z_star,
         zb,
         r_effects,
-    ) = main(300, 1600, 18000, 45, 2500)
+    ) = main(701.52, 2000, 18000, 87.5, 2500)
     print(f"Initial energy: {E0:.4f}J")
     print(f"Energy in ground: {E_ground:.4f}J")
     print(f"Energy in air: {E_air:.4f}J")
