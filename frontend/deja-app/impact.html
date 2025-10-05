@@ -1,91 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Impact by the Asteroid</title>
-		<link rel="stylesheet" href="src/style.css" />
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-	</head>
-	<body class="h-screen">
-		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Impact by the Asteroid</title>
+    <link rel="stylesheet" href="/dist/assets/index-henjr0tr.css" />
+    <link rel="stylesheet" href="src/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+  </head>
+  <body class="h-screen">
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
 
-    		<div class="fixed h-full w-full -z-50" id="particles-js"></div>
-		
-		<!-- TODO: Attribute OSM -->
+    <div class="fixed h-full w-full -z-50" id="particles-js"></div>
 
-		<div class="absolute top-5 left-5 z-1024">
-					<p id="chat1" class="text-left text-xl rounded-r-2xl rounded-bl-3xl p-4 bg-[#14141490] backdrop-blur-sm w-fit opacity-0 transition-opacity duration-1000 ease-in-out">
-						Yup, that's quite devastating.
-					</p>
-					<p id="chat2" class="mt-3 text-left text-xl rounded-r-2xl rounded-bl-3xl p-4 bg-[#14141490] backdrop-blur-sm opacity-0 transition-opacity duration-1000 ease-in-out delay-2000">
-						We need to find a way to mitigate this.<br>I'll let you explore the impacts for now.
-					</p>
-					<a href="mitigation.html" id="gobtn"
-					class="border-slate-50 border relative top-[2rem] px-8 py-4 bg-[#10101090] backdrop-blur-sm rounded-4xl hover:scale-125 duration-100 focus:scale-110 opacity-0 transition-opacity duration-1000 ease-in-out delay-4000">
-					Mitigations &rarr;</a>
+    <!-- TODO: Attribute OSM -->
 
-		</div>
+    <div class="absolute top-5 left-5 z-1024">
+      <p
+        id="chat1"
+        class="text-left text-xl rounded-r-2xl rounded-bl-3xl p-4 bg-[#14141490] backdrop-blur-sm w-fit opacity-0 transition-opacity duration-1000 ease-in-out"
+      >
+        Yup, that's quite devastating.
+      </p>
+      <p
+        id="chat2"
+        class="mt-3 text-left text-xl rounded-r-2xl rounded-bl-3xl p-4 bg-[#14141490] backdrop-blur-sm opacity-0 transition-opacity duration-1000 ease-in-out delay-2000"
+      >
+        We need to find a way to mitigate this.<br />I'll let you explore the
+        impacts for now.
+      </p>
+      <a
+        href="mitigation.html"
+        id="gobtn"
+        class="border-slate-50 border relative top-[2rem] px-8 py-4 bg-[#10101090] backdrop-blur-sm rounded-4xl hover:scale-125 focus:scale-110 opacity-0 transition-opacity duration-1000 ease-in-out delay-4000"
+      >
+        Mitigations &rarr;</a
+      >
+    </div>
 
-		<div class="grid grid-cols-[1fr_320px] gap-5 h-full p-10 ">
-			<div id="map" class="h-full rounded-2xl hover:scale-[1.005_1.005] duration-200"></div>
-			<div id="sidebar" class="flex flex-col gap-5">
-				<div class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200">
-					<h1 class="text-4xl font-bold text-center" id="name">Meteor Name</h1>
-					<img src="/public/meteor.png" class="w-full">
-				</div>
-				<div class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200">
-					<h2 class="text-2xl font-light mb-2">Asteroid Properties</h2>
-					<div class="flex flex-row">
-						<div class="w-full">
-							<p class="mb-1"><b>Diameter</b></p>
-							<p class="mb-1"><b>Impact Velocity</b></p>
-							<p class="mb-1"><b>Impact Angle</b></p>
-						</div>
-						<div class="w-max text-right">
-							<p class="mb-1" id="diameter"></p>
-							<p class="mb-1" id="velocity"></p>
-							<p class="mb-1" id="angle">45°</p>
-						</div>
-					</div>
-				</div>
-				<div class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200">
-					<h2 class="text-2xl font-light">Impact Energy</h2>
-					<div class="flex flex-row">
-						<div class="w-full">
-							<p class="mb-1"><b>Impact Energy</b></p>
-							<p class="mb-1"><b>TNT Equivalent</b></p>
-							<p class="mb-1"><b>...also equivalent to</b></p>
-						</div>
-						<div class="w-max text-right">
-							<p class="mb-1" id="energy"></p>
-							<p class="mb-1" id="tnt"></p>
-							<p class="mb-1" id="hiroshima"></p>
-						</div>
-					</div>
-				</div>
-				<div class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200">
-					<h2 class="text-2xl font-light">Effects</h2>
-					<div class="flex flex-row">
-						<div class="w-full">
-							<p class="mb-1"><b>Crater Diameter</b></p>
-							<p class="mb-1"><b>Crater Depth</b></p>
-							<p class="mb-1"><b>Population Vapourised</b></p>
-						</div>
-						<div class="w-max text-right">
-							<p class="mb-1" id="craterdia"></p>
-							<p class="mb-1" id="craterdep"></p>
-							<p class="mb-1" id="population"></p>
-						</div>
-					</div>
-					<h2 class="text-2xl font-light">Effects due to Crater</h2>
-					r effects
-				</div>
-			</div>
-		</div>
+    <div class="grid grid-cols-[1fr_320px] gap-5 h-full p-10">
+      <div
+        id="map"
+        class="h-full rounded-2xl hover:scale-[1.005_1.005] duration-200"
+      ></div>
+      <div id="sidebar" class="flex flex-col gap-5">
+        <div
+          class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200"
+        >
+          <h1 class="text-4xl font-bold text-center" id="name">Meteor Name</h1>
+          <img src="/public/meteor.png" class="w-full" />
+        </div>
+        <div
+          class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200"
+        >
+          <h2 class="text-2xl font-light mb-2">Asteroid Properties</h2>
+          <div class="flex flex-row">
+            <div class="w-full">
+              <p class="mb-1"><b>Diameter</b></p>
+              <p class="mb-1"><b>Impact Velocity</b></p>
+              <p class="mb-1"><b>Impact Angle</b></p>
+            </div>
+            <div class="w-max text-right">
+              <p class="mb-1" id="diameter"></p>
+              <p class="mb-1" id="velocity"></p>
+              <p class="mb-1" id="angle">45°</p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200"
+        >
+          <h2 class="text-2xl font-light">Impact Energy</h2>
+          <div class="flex flex-row">
+            <div class="w-full">
+              <p class="mb-1"><b>Impact Energy</b></p>
+              <p class="mb-1"><b>TNT Equivalent</b></p>
+              <p class="mb-1"><b>...also equivalent to</b></p>
+            </div>
+            <div class="w-max text-right">
+              <p class="mb-1" id="energy"></p>
+              <p class="mb-1" id="tnt"></p>
+              <p class="mb-1" id="hiroshima"></p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200"
+        >
+          <h2 class="text-2xl font-light">Effects</h2>
+          <div class="flex flex-row">
+            <div class="w-full">
+              <p class="mb-1"><b>Crater Diameter</b></p>
+              <p class="mb-1"><b>Crater Depth</b></p>
+              <p class="mb-1"><b>Population Vapourised</b></p>
+            </div>
+            <div class="w-max text-right">
+              <p class="mb-1" id="craterdia"></p>
+              <p class="mb-1" id="craterdep"></p>
+              <p class="mb-1" id="population"></p>
+            </div>
+          </div>
+          <h2 class="text-2xl font-light">Effects due to Crater</h2>
+          r effects
+        </div>
+      </div>
+    </div>
 
-		<script defer src="src/map.js"></script>
-    		<script src="src/particles.min.js"></script>
-		<script src="src/particles.js"></script>
-	</body>
+    <script defer src="src/map.js"></script>
+    <script src="src/particles.min.js"></script>
+    <script src="src/particles.js"></script>
+  </body>
 </html>
