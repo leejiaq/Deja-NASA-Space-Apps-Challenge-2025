@@ -105,7 +105,7 @@ fetch(
               }</span>
             </p>
             <a
-              href="/launch?id=${i}&date=${year}-${month}-${day}&close_approach_date=${
+              href="/launch/?id=${i}&date=${year}-${month}-${day}&close_approach_date=${
         fetchData.near_earth_objects[`${year}-${month}-${day}`][i]
           .close_approach_data[0].close_approach_date
       }&estimated_maximum_diameter=${fetchData.near_earth_objects[
