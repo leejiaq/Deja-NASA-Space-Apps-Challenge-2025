@@ -101,6 +101,103 @@ def altitude_of_breakup(L0, v0, Ui, T, C_D=1.0, H=8000, p0=1.2250):
     )
 
 
+def complete_breakup_height(L0, z_star, Ui, T, H=8000, C_D=1.0, p0=1.2250, ratio=3):
+    """
+    Returns the complete breakup height of an impactor
+    if the impactor does not break up, returns 0
+    Eq 5a: z = z* - 2Hln(1 + l/2H * sqrt(ratio^2 - 1))
+    where l is defined as:
+    Eq 5b: l = L0*sinT*sqrt(Ui/(C_D*exp(-z*/H))
+    """
+
+    T_rad = deg2rad(T)
+    l_disp = L0 * math.sin(T_rad) * math.sqrt(Ui / (C_D * math.exp(-z_star / H)))
+    z = z_star - 2 * H * math.log(1 + (l_disp / (2 * H)) * math.sqrt(ratio**2 - 1))
+    return 0 if z <= 0 else z
+
+
+def length_at_alt(L0, z_star, Ui, T, z, H=8000, C_D=1.0, p0=1.2250):
+    """
+    Returns the pancaked length of the impactor IF complete_breakup_height returns -1
+    Eq 6a: L(z) = L0 * sqrt(1 + (2H / l)^2 * (exp((z* - z)/2H) -1)^2
+    where l is defined as:
+    Eq 6b: l = L0*sinT*sqrt(Ui/(C_D*exp(-z*/H))
+    """
+
+    T_rad = deg2rad(T)
+    l_disp = L0 * math.sin(T_rad) * math.sqrt(Ui / (C_D * math.exp(-z_star / H)))
+    return L0 * math.sqrt(
+        1 + (2 * H / l_disp) ** 2 * (math.exp((z_star - z) / (2 * H)) - 1) ** 2
+    )
+
+
+def swarm_velocity_at_alt(
+    v0, L0, z_star, Ui, T, z, H=8000, C_D=1.0, p0=1.2250, ratio=3
+):
+    """
+    Returns the swarm velocity of the impactor IF complete_breakup_height returns 0
+    Eq 7*a: v(z) = v(z*)exp(-3/4 * ((C_D * exp(-z*/H)) / (Ui * L0^3 * sinT)) * int_z^z* (e^((z* - z)/H) * L(z)^2) dz)
+    sub z = zb:
+    Eq 7*b: v(zb) = v(z*)exp(-3/4 * ((C_D * exp(-z*/H)) / (Ui * L0^3 * sinT)) * (l*L0^2)/24 * alpha(8 * (3+alpha^2) + 3*alpha * l/H * (2 + a^2))
+    where l is defined as:
+    Eq 7*c: l = L0*sinT*sqrt(Ui/(C_D*exp(-z*/H))
+    and alpha is defined as:
+    Eq 7*d: alpha = sqrt(ratio^2 - 1)
+    """
+
+    vel_at_z_star = v_at_altitude(v0, L0, Ui, T, z_star)
+
+    l_disp = L0 * math.sin(deg2rad(T)) * math.sqrt(Ui / (C_D * math.exp(-z_star / H)))
+
+    alpha = math.sqrt(ratio**2 - 1)
+
+    factor = (
+        ((l_disp * L0**2) / 24)
+        * alpha
+        * (8 * (3 + alpha**2) + 3 * alpha * (l_disp / H) * (2 + alpha**2))
+    )
+
+    return vel_at_z_star * math.exp(
+        -3
+        / 4
+        * ((C_D * math.exp(-z_star / H)) / (Ui * L0**3 * math.sin(deg2rad(T))))
+        * factor
+    )
+
+
+def swarm_velocity_at_zero(v0, L0, z_star, Ui, T, H=8000, C_D=1.0, p0=1.2250):
+    """
+    Returns the swarm velocity of the impactor IF complete_breakup_height returns 0
+    Eq 7a: v(z) = v(z*)exp(-3/4 * ((C_D * exp(-z*/H)) / (Ui * L0^3 * sinT)) * int_z^z* (e^((z* - z)/H) * L(z)^2) dz)
+    sub z = 0
+    Eq 7b : v(0) = v(z*)exp(-3/4 * ((C_D * exp(-z*/H)) / (Ui * L0^3 * sinT)) * (H^3 * L0^2)/3l^2 * (3(4 + (l/H)^2) exp(z*/H) + 6exp(2z*/H) - 16exp(3z*/2H) - 3(l/H)^2 - 2))
+    where l is defined as:
+    Eq: 7c: l = L0*sinT*sqrt(Ui/(C_D*exp(-z*/H))
+    """
+
+    vel_at_z_star = v_at_altitude(v0, L0, Ui, T, z_star)
+
+    l_disp = L0 * math.sin(deg2rad(T)) * math.sqrt(Ui / (C_D * math.exp(-z_star / H)))
+
+    factor = (
+        (H**3 * L0**2)
+        / (3 * l_disp**2)
+        * (
+            3 * (4 + (l_disp / H) ** 2) * math.exp(z_star / H)
+            + 6 * math.exp(2 * z_star / H)
+            - 16 * math.exp(3 * z_star / (2 * H))
+            - 3 * (l_disp / H) ** 2
+            - 2
+        )
+    )
+    exp_arg = (
+        -3 / 4 * (C_D * math.exp(-z_star / H)) / (Ui * L0**3 * math.sin(T)) * factor
+    )
+    vel_at_zero = vel_at_z_star * math.exp(exp_arg)
+
+    return vel_at_zero
+
+
 # --------------------- 3. CRATER -----------------------------------
 
 
@@ -306,31 +403,89 @@ def peak_vel(p, P0=101325, c0=343):
 # ------------------- MAIN -----------------------------
 def main(L0, Ui, v0, T, Uj):
     E0 = k_energy(L0, Ui, v0)
-    v_ground = v_at_altitude(v0, L0, Ui, T, 0)
-    E = energy_at_altitude(v_ground, v0, E0)
+    zb = 0.0
+    v_ground = None
+    crater_diamater = None
+    crater_depth = None
+    fball_radius = 0.0
+    M = None
+    E = 0.0
+    E_ground = None
+    E_air = None
 
-    D_tc = transient_crater_diameter(L0, Ui, Uj, v_ground, T)
-    crater_diamater = final_crater_diameter(D_tc)
+    z_star = altitude_of_breakup(L0, v0, Ui, T)
+    if z_star != 0:
+        zb = complete_breakup_height(L0, z_star, Ui, T)
+        if zb != 0:
+            v_zb = swarm_velocity_at_alt(v0, L0, z_star, Ui, T, zb)
+            E = energy_at_altitude(v0 - v_zb, v0, E0)
+            E_air = E
+            E_ground = 0.0
+        else:
+            L = length_at_alt(L0, z_star, Ui, T, 0)
+            v_ground = swarm_velocity_at_zero(v0, L0, z_star, Ui, T)
+            E_ground = energy_at_altitude(v_ground, v0, E0)
+            E_air = E0 - E_ground
+            E = max(E_air, E_ground)
 
-    if D_tc < 2560:
-        crater_depth = simple_crater_depth(crater_diamater)
+            D_tc = transient_crater_diameter(L, Ui, Uj, v_ground, T)
+            crater_diamater = final_crater_diameter(D_tc)
+
+            if D_tc < 2560:
+                crater_depth = simple_crater_depth(crater_diamater)
+            else:
+                crater_depth = complex_crater_depth(crater_diamater)
+            fball_radius = fireball_radius(E_ground)
+            M = seismic_magnitude(E_ground)
+
     else:
-        crater_depth = complex_crater_depth(crater_diamater)
-    fball_radius = fireball_radius(E0)
-    M = seismic_magnitude(E)
+        v_ground = v_at_altitude(v0, L0, Ui, T, 0)
+        E = energy_at_altitude(v_ground, v0, E0)
+        E_ground = E
+        E_air = E0 - E
+
+        D_tc = transient_crater_diameter(L0, Ui, Uj, v_ground, T)
+        crater_diamater = final_crater_diameter(D_tc)
+
+        if D_tc < 2560:
+            crater_depth = simple_crater_depth(crater_diamater)
+        else:
+            crater_depth = complex_crater_depth(crater_diamater)
+        fball_radius = fireball_radius(E)
+        M = seismic_magnitude(E)
 
     r_effects = dict()
 
+    ricter_to_mmi = {
+        0: "-",
+        1: "I",
+        2: "I-II",
+        3: "III-IV",
+        4: "IV-V",
+        5: "VI-VII",
+        6: "VII-VIII",
+        7: "IX-X",
+        8: "X-XI",
+        9: "XII",
+    }
+
     for r in range(0, 20000, 1):
         thermal = thermal_exposure(E, r)
-        effective_M = effective_magnitude(M, r)
-        mmi = min(12, math.floor(effective_M))
+        mmi = None
+        if M is not None:
+            effective_M = effective_magnitude(M, r)
+            mmi = ricter_to_mmi[min(9, math.floor(max(float(0), effective_M)))]
 
         thickness = ejecta_thickness(D_tc, r)
         mean_size = mean_ejecta_size(crater_diamater, r)
         dist = scaled_dist(r, E)
+        rm1 = (550 * scaled_dist(r, E)) / (1.2 * (550 - scaled_dist(r, E)))
+        blast = 0.0
+        if (E_ground > E_air and dist < rm1) or zb == 0:
+            blast = surface_blast(dist)
+        else:
+            blast = airblast(dist, zb)
 
-        blast = surface_blast(dist)
         peak_wind_vel = peak_vel(blast)
 
         r_effects[r] = {
@@ -343,8 +498,48 @@ def main(L0, Ui, v0, T, Uj):
             "peak_wind_vel": peak_wind_vel,
         }
 
-    return E0, E, v_ground, crater_diamater, crater_depth, fball_radius, r_effects
+    return (
+        E0,
+        E_ground,
+        E_air,
+        v_ground,
+        crater_diamater,
+        crater_depth,
+        fball_radius,
+        z_star,
+        zb,
+        r_effects,
+    )
 
 
 if __name__ == "__main__":
-    main(1500, 3000, 19000, 45, 2500)
+    (
+        E0,
+        E_ground,
+        E_air,
+        v_ground,
+        crater_diamater,
+        crater_depth,
+        fball_radius,
+        z_star,
+        zb,
+        r_effects,
+    ) = main(300, 1600, 18000, 45, 2500)
+    print(f"Initial energy: {E0:.4f}J")
+    print(f"Energy in ground: {E_ground:.4f}J")
+    print(f"Energy in air: {E_air:.4f}J")
+    print(f"Final ground velocity: {v_ground:.4f}m/s")
+    print(f"Crater diameter: {crater_diamater:.4f}m")
+    print(f"Crater depth: {crater_depth:.4f}m")
+    print(f"Fireball radius: {fball_radius:.4f}m")
+    print(f"Z*: {z_star:.4f}m")
+    print(f"Zb: {zb:.4f}m")
+
+    print("At 100km:")
+    print(f"Thermal exposure: {r_effects[100]['thermal_exposure']:.4f}J/m^2")
+    print(f"Effective magnitude: {r_effects[100]['effective_magnitude']:.4f}")
+    print(f"Effective MMI: {r_effects[100]['effective_mmi']}")
+    print(f"Ejecta thickness: {r_effects[100]['ejecta_thickness']:.4f}m")
+    print(f"Mean ejecta size: {r_effects[100]['mean_ejecta_size']:.4f}m")
+    print(f"Surface blast: {r_effects[100]['surface_blast']:.4f}Pa")
+    print(f"Peak wind velocity: {r_effects[100]['peak_wind_vel']:.4f}m/s")
