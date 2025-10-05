@@ -105,7 +105,9 @@ fetch(
               }</span>
             </p>
             <a
-              href="/launch/?id=${i}&date=${year}-${month}-${day}&close_approach_date=${
+              href="/post-sel.html?id=${i}&date=${year}-${month}-${day}&name=${
+        fetchData.near_earth_objects[`${year}-${month}-${day}`][i].name
+      }&close_approach_date=${
         fetchData.near_earth_objects[`${year}-${month}-${day}`][i]
           .close_approach_data[0].close_approach_date
       }&estimated_maximum_diameter=${fetchData.near_earth_objects[
@@ -118,7 +120,7 @@ fetch(
       ).toFixed(2)}&distance_from_earth=${Number(
         fetchData.near_earth_objects[`${year}-${month}-${day}`][i]
           .close_approach_data[0].miss_distance.astronomical
-      ).toFixed(2)}"
+      ).toFixed(2)}#sel-wrapper"
               id="asteroid-call"
               class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-110 duration-200"
               >Select this asteroid</a
