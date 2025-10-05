@@ -24,7 +24,7 @@ source .venv/bin/activate
 
 Then use this command to activate the API for front end:
 ```sh 
-uvicorn app:app --reload
+uvicorn api:app --reload
 ```
 
 
