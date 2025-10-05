@@ -3,8 +3,9 @@ from astropy.time import Time
 from poliastro.bodies import Sun, Earth
 from poliastro.twobody import Orbit
 from asteroid_load import update_db
+import random
 import sqlite3
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 import datetime
 import requests
 import os
@@ -38,18 +39,28 @@ def get_nearest_earth_orbit():
     return ids
 
 
-def get_orbit_earth_asteroid(ids):
+def get_orbit_earth_asteroid(id):
     conn = sqlite3.connect("asteroid.db")
     c = conn.cursor()
 
-    placeholders = ",".join("?" for _ in ids)
-
     # Random asteroid
     c.execute(
-        f"SELECT spkid, fullname, a, e, i, om, w, ma FROM asteroids WHERE pha = 1 AND spkid IN ({placeholders}) ORDER BY RANDOM() LIMIT 1",
-        ids,
+        "SELECT spkid, fullname, a, e, i, om, w, ma FROM asteroids WHERE spkid = ?",
+        (id,),
     )
     row = c.fetchone()
+
+    if row is None:
+        update_db()
+        c.execute(
+            "SELECT spkid, fullname, a, e, i, om, w, ma FROM asteroids WHERE spkid = ?",
+            (id,),
+        )
+        row = c.fetchone()
+        if row is None:
+            print("Asteroid not found")
+            return
+
     conn.close()
 
     spkid, name, a, e, i, om, w, ma = row
@@ -80,13 +91,56 @@ def propagate(earth_orbit, asteroid_orbit, steps=1000):
         earth_pos.append(earth_future.r)
         asteroid_pos.append(asteroid_future.r)
 
-    earch_pos = np.array(earth_pos)
+    earth_pos = np.array(earth_pos)
     asteroid_pos = np.array(asteroid_pos)
 
-    return earch_pos, asteroid_pos
+    return earth_pos, asteroid_pos
 
 
-def plot(earth_pos, asteroid_pos, earth_orbit, asteroid_orbit, steps=1000):
+def propagate_impulse(
+    earth_orbit, asteroid_orbit, delta_v_vector, t_maneuver, steps=1000
+):
+    times = np.linspace(0, 365, steps) * u.day
+
+    earth_pos = []
+    asteroid_pos = []
+
+    new_orbit = apply_delta_v(asteroid_orbit, delta_v_vector, t_maneuver)
+    for t in times:
+        dt = t - 0 * u.day
+
+        dt_days = dt.to(u.day)
+
+        if dt_days <= t_maneuver:
+            asteroid_future = asteroid_orbit.propagate(dt_days)
+        else:
+            asteroid_future = new_orbit.propagate(dt_days - t_maneuver)
+
+        earth_future = earth_orbit.propagate(dt)
+
+        earth_pos.append(earth_future.r)
+        asteroid_pos.append(asteroid_future.r)
+
+    earth_pos = np.array(earth_pos)
+    asteroid_pos = np.array(asteroid_pos)
+
+    return earth_pos, asteroid_pos
+
+
+def apply_delta_v(asteroid_orbit, delta_v_vector, t_maneuver):
+    dt = t_maneuver
+    orbit_at_t = asteroid_orbit.propagate(dt)
+
+    r, v = orbit_at_t.rv()
+    v = v.to(u.km / u.s)
+    v += delta_v_vector
+
+    new_orbit = Orbit.from_vectors(Sun, r, v)
+
+    return new_orbit
+
+
+def plot(earth_pos, asteroid_pos, earth_pos_orbit, asteroid_pos_orbit, steps=1000):
     initial_data = [
         # Sun marker
         go.Scatter3d(
@@ -106,12 +160,20 @@ def plot(earth_pos, asteroid_pos, earth_orbit, asteroid_orbit, steps=1000):
             name="Earth Orbit",
         ),
         go.Scatter3d(
+            x=asteroid_pos_orbit[:, 0],
+            y=asteroid_pos_orbit[:, 1],
+            z=asteroid_pos_orbit[:, 2],
+            mode="lines",
+            line=dict(color="red", width=2, dash="dash"),
+            name="Asteroid Orbit Old",
+        ),
+        go.Scatter3d(
             x=asteroid_pos[:, 0],
             y=asteroid_pos[:, 1],
             z=asteroid_pos[:, 2],
             mode="lines",
             line=dict(color="red", width=2),
-            name="Asteroid Orbit",
+            name="Asteroid Orbit New",
         ),
         go.Scatter3d(
             x=[earth_pos[0, 0]],
@@ -147,7 +209,7 @@ def plot(earth_pos, asteroid_pos, earth_orbit, asteroid_orbit, steps=1000):
                         z=asteroid_pos[: k + 1, 2],
                     ),
                 ],
-                traces=[3, 4],
+                traces=[4, 5],
             ),
         )
 
@@ -155,10 +217,10 @@ def plot(earth_pos, asteroid_pos, earth_orbit, asteroid_orbit, steps=1000):
         data=initial_data,
         layout=go.Layout(
             scene=dict(
-                xaxis_title="X [km]",
-                yaxis_title="Y [km]",
-                zaxis_title="Z [km]",
-                aspectmode="cube",
+                xaxis=dict(visible=False, showbackground=False),
+                yaxis=dict(visible=False, showbackground=False),
+                zaxis=dict(visible=False, showbackground=False),
+                aspectmode="data",
                 camera=dict(eye=dict(x=0, y=0, z=2.5)),
             ),
             title="Asteroid orbit",
@@ -198,9 +260,19 @@ def plot(earth_pos, asteroid_pos, earth_orbit, asteroid_orbit, steps=1000):
 def main():
     steps = 730
     ids = get_nearest_earth_orbit()
-    asteroid_orbit, earth_orbit = get_orbit_earth_asteroid(ids)
-    earth_pos, asteroid_pos = propagate(earth_orbit, asteroid_orbit, steps)
-    plot(earth_pos, asteroid_pos, earth_orbit, asteroid_orbit, steps)
+    id = random.choice(ids)
+    impulse = np.array([0.1, 0.0, 0.0]) * u.km / u.s
+    impulse_time = 30 * u.day
+    asteroid_orbit, earth_orbit = get_orbit_earth_asteroid(id)
+    earth_pos_orbit, asteroid_pos_orbit = propagate(earth_orbit, asteroid_orbit, steps)
+    earth_pos, asteroid_pos = propagate_impulse(
+        earth_orbit, asteroid_orbit, impulse, impulse_time, steps
+    )
+
+    print(asteroid_pos_orbit[-5:])
+    print("\n")
+    print(asteroid_pos[-5:])
+    plot(earth_pos, asteroid_pos, earth_pos_orbit, asteroid_pos_orbit, steps)
 
 
 if __name__ == "__main__":
