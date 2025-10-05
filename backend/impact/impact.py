@@ -471,6 +471,9 @@ def main(L0, Ui, v0, T, Uj):
 
     for r in range(0, 20000, 1):
         thermal = thermal_exposure(E, r)
+        thickness = None
+        mean_size = None
+        effective_M = None
         mmi = None
         if M is not None:
             effective_M = effective_magnitude(M, r)
