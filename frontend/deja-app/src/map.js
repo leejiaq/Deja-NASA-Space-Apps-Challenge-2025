@@ -1,9 +1,3 @@
-window.addEventListener("load", () => {
-  document.getElementById("chat1").classList.add("opacity-100");
-  document.getElementById("chat2").classList.add("opacity-100");
-  document.getElementById("gobtn").classList.add("opacity-100");
-});
-
 const params = new URLSearchParams(document.location.search);
 
 const lat = parseFloat(params.get("lat"));
@@ -26,7 +20,7 @@ const data = {
 	Uj: 5515.3,
 };
 
-fetch("http://localhost:8000/impact", {
+fetch("http://dejaapi.altafcreator.com/impact", {
 	method: "POST",
 	headers: {
 		"Content-Type": "application/json"
@@ -34,7 +28,7 @@ fetch("http://localhost:8000/impact", {
 	body: JSON.stringify(data)
 }).then(res => res.json()).then(result => {
 	impact = result;
-	console.log(impact.crater_diamater)
+	console.log(impact)
 	var circle = L.circle([lat, lon], {
 		color: 'red',
 		fillColor: '#f03',
@@ -54,12 +48,21 @@ fetch("http://localhost:8000/impact", {
 
 	document.getElementById("craterdia").innerHTML = formatNum(impact.crater_diamater) + "&nbsp;m"
 	document.getElementById("craterdep").innerHTML = formatNum(impact.crater_depth) + "&nbsp;m"
+
+	document.getElementById("thermal").innerHTML = formatNum(parseFloat(impact.r_effects["1"].thermal_exposure) / 10**6) + "&nbspMJ⁄m²";
+	document.getElementById("mmi").innerHTML = impact.r_effects["1"].effective_mmi;
+	document.getElementById("wind").innerHTML = formatNum(parseFloat(impact.r_effects["1"].peak_wind_vel)) + "&nbspm⁄s";
+	document.getElementById("blast").innerHTML = formatNum(parseFloat(impact.r_effects["1"].surface_blast) / 10**6) + "&nbspMPa";
 	
 	fetch(`https://lobster-app-bhpix.ondigitalocean.app/?lat=${params.get("lat")}&lng=${params.get("lon")}&radii=${Math.round(impact.crater_diamater / 2)}`)
 		.then((response) => response.json()).then(result => {
 			console.log(result)
 			document.getElementById("population").innerHTML = formatNum(parseFloat(result.populations[0]));
 		})
+  
+	document.getElementById("chat1").classList.add("opacity-100");
+	document.getElementById("chat2").classList.add("opacity-100");
+	document.getElementById("gobtn").classList.add("opacity-100");
 })
 
 function formatNum(n) {
