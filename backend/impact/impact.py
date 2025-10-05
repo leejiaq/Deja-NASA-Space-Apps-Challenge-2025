@@ -485,7 +485,7 @@ def main(L0, Ui, v0, T, Uj):
         dist = scaled_dist(r, E)
         rm1 = (550 * scaled_dist(r, E)) / (1.2 * (550 - scaled_dist(r, E)))
         blast = 0.0
-        if (E_ground > E_air and dist < rm1) or z_star == 0:
+        if (E_ground > E_air and dist < rm1) or zb == 0:
             blast = surface_blast(dist)
         else:
             blast = airblast(dist, zb)
