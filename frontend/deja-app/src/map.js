@@ -15,7 +15,7 @@ const data = {
 	Ui: 2000.0,
 	v0: parseFloat(params.get("relative_velocity")) / 3.6, // convert to m/s
 	T: parseFloat(params.get("angle")),
-	Uj: 5515.3,
+	Uj: 2500.0,
 };
 
 fetch("https://dejaapi.altafcreator.com/impact", {
