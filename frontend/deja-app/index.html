@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome to Deja</title>
     <link rel="stylesheet" href="src/style.css" />
+    <style>
+      #main-wrapper::-webkit-scrollbar {
+        display: none !important;
+      }
+    </style>
   </head>
   <body>
     <!-- particles -->
-    <div class="fixed h-full w-full" id="particles-js"></div>
+    <div class="fixed h-full w-full -z-50" id="particles-js"></div>
 
     <!-- decorative elements -->
     <div class="-left-36 -top-40 fixed lg:-left-5 lg:-top-5">
@@ -29,23 +34,52 @@
       ></div>
     </div>
 
-    <!-- main wrapper -->
-    <section class="fixed h-full w-full z-100" id="main-wrapper">
-      <div
-        class="flex items-center justify-center w-full h-full flex-col max-w-sm mx-auto"
+    <div
+      id="main-wrapper"
+      class="snap-y snap-mandatory overflow-y-scroll h-screen scroll-smooth"
+    >
+      <!-- hero wrapper -->
+      <section
+        class="h-screen w-full z-100 p-10 snap-center snap-always"
+        id="hero-wrapper"
       >
-        <h1 class="font-bold text-4xl">Welcome to Deja!</h1>
-        <p class="mt-2 text-center"
-          >An interactive visualization of real life past and future meteor
-          impact.</p
+        <div
+          class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
         >
-        <a
-          href="select-asteroid.html"
-          class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110"
-          >Start</a
+          <h1 class="font-bold text-4xl">Welcome to Deja!</h1>
+          <p class="mt-2 text-center"
+            >An interactive visualization of real life past and future meteor
+            impact.</p
+          >
+          <a
+            href="#sel-wrapper"
+            class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110"
+            >Start</a
+          >
+        </div>
+      </section>
+
+      <!-- selection wrapper -->
+      <section
+        class="h-screen w-full z-100 p-10 snap-center snap-always"
+        id="sel-wrapper"
+      >
+        <div
+          class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
         >
-      </div>
-    </section>
+          <h1 class="font-bold text-4xl">Please select</h1>
+          <p class="mt-2 text-center"
+            >An interactive visualization of real life past and future meteor
+            impact.</p
+          >
+          <a
+            href="select-asteroid.html"
+            class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110"
+            >Start</a
+          >
+        </div>
+      </section>
+    </div>
 
     <!-- scripts -->
     <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
