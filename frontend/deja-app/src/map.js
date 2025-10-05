@@ -1,3 +1,9 @@
+window.addEventListener("load", () => {
+  document.getElementById("chat1").classList.add("opacity-100");
+  document.getElementById("chat2").classList.add("opacity-100");
+  document.getElementById("gobtn").classList.add("opacity-100");
+});
+
 const params = new URLSearchParams(document.location.search);
 
 const lat = parseFloat(params.get("lat"));

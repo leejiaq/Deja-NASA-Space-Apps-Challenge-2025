@@ -13,7 +13,9 @@ config_version=5
 config/name="NASA"
 run/main_scene="res://node_3d.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="uid://d1ibameepd150"
+config/icon="uid://yb7a4kpb4na0"
 
 [display]
 
