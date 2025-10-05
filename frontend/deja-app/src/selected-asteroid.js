@@ -12,7 +12,7 @@ selectedAsteroid.innerHTML = `
         >
           <!-- image -->
           <div class="lg:flex flex-col justify-center items-center relative -z-10 h-4/5 hidden"
-            ><img src="meteor.png" alt="" style="scale: ${
+            ><img src="/public/meteor.png" alt="" style="scale: ${
               estimatedMaximumDiameter / 500
             } ${estimatedMaximumDiameter / 500}" /><p
               class="absolute bottom-0 left-0 text-slate-200/40"
@@ -63,7 +63,7 @@ asteroidNamu.innerHTML = name;
 document.getElementById(
   "asteroid-img"
 ).innerHTML = `<div class="flex flex-col justify-center items-center -z-10 h-[30%]"
-            ><img src="meteor.png" alt="" style="height:30vh; width:auto;" /><p
+            ><img src="/public/meteor.png" alt="" style="height:30vh; width:auto;" /><p
               class="text-slate-200/40"
               >*Not the actual asteroid.<br />**Image is scaled to estimated maximum
               diameter of the asteroid and small asteroid can appear to be near invisible. <br />
