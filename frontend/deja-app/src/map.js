@@ -20,7 +20,7 @@ const data = {
 	Uj: 5515.3,
 };
 
-fetch("http://dejaapi.altafcreator.com/impact", {
+fetch("https://dejaapi.altafcreator.com/impact", {
 	method: "POST",
 	headers: {
 		"Content-Type": "application/json"
