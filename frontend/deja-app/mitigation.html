@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deja Asteroid Simulator</title>
+    <link rel="stylesheet" href="src/style.css" />
+    <style>
+      #main-wrapper::-webkit-scrollbar {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- particles -->
+    <div class="fixed h-full w-full -z-50" id="particles-js"></div>
+
+    <!-- decorative elements -->
+    <div
+      class="-left-36 -top-40 fixed lg:-left-5 lg:-top-5 animate-pulse"
+      id="decor-1"
+    >
+      <div
+        class="w-64 h-64 rounded-full bg-[#9F2042] opacity-70 blur-2xl"
+      ></div>
+      <div
+        class="w-80 h-80 rounded-full bg-[#7B0D1E] relative z-10 opacity-70 -mt-24 ml-24 blur-2xl"
+      ></div>
+    </div>
+
+    <div
+      class="-right-20 -bottom-20 fixed lg:-right-10 lg:bottom-20 animate-pulse"
+      id="decor-2"
+    >
+      <div
+        class="w-80 h-80 rounded-full bg-[#9F2042] opacity-70 blur-2xl"
+      ></div>
+      <div
+        class="w-72 h-72 rounded-full bg-[#7B0D1E] relative z-10 opacity-70 -mt-24 -ml-24 blur-2xl"
+      ></div>
+    </div>
+
+    <section
+      class="h-screen w-full z-100 snap-center snap-always"
+      id="hero-wrapper"
+    >
+      <div
+        class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 rounded-2xl"
+      >
+        <h1 class="font-bold text-4xl"
+          >Asteroid Collision Avoidance Strategies</h1
+        >
+        <p class="mt-6 text-center text-xl"
+          >As you have seen in the simulation that an asteroid can caused
+          devastating impact on populations of the earth. This page contains
+          asteroid collision avoidance techniques studied or used by NASA.
+        </p>
+        <a
+          href="#story-wrapper"
+          class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110"
+          >Start</a
+        >
+      </div>
+    </section>
+    <section
+      class="h-screen w-full z-100 snap-center snap-always"
+      id="hero-wrapper"
+    >
+      <div
+        class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 rounded-2xl"
+      >
+        <h1 class="font-bold text-4xl">Physicist Stephen Hawking</h1>
+        <p class="mt-6 text-center text-xl"
+          >in his final book, Brief Answers to the Big Questions, considered an
+          asteroid collision to be the biggest threat to the planet.
+        </p>
+        <div>
+          <a
+            href="#story-wrapper"
+            class="ml-10 mt-10 px-8 py-4 border-slate-50 border text-slate-1 00 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            >Back</a
+          >
+          <a
+            href="#story-wrapper"
+            class="ml-10 mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            >Next</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="src/particles.js"></script>
+    <script src="src/mitigation.js"></script>
+  </body>
+</html>
