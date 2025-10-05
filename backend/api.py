@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 from asteroid.asteroid_orbit import (
@@ -33,24 +34,30 @@ class ImpactRequest(BaseModel):
 
 class ImpactResponse(BaseModel):
     E0: float  # initial energy of asteroid in J
-    E_ground: float  # energy of asteroid transferred to ground in J
-    E_air: float  # energy of asteroid dissipated in the air in J
-    v_ground: float  # final speed of asteroid on ground in m/s
-    crater_diamater: float  # diameter of crater created in m
-    crater_depth: float  # depth of crater created in m
-    z_breakup: float  # height at which asteroid begins breaks up in m
-    zb: float  # height at which the asteroid completely breaks apart in m
+    E_ground: Optional[
+        float
+    ]  # energy of asteroid transferred to ground in J, can be None
+    E_air: Optional[float]  # energy of asteroid dissipated in the air in J, can be None
+    v_ground: Optional[float]  # final speed of asteroid on ground in m/s, can be None
+    crater_diamater: Optional[float]  # diameter of crater created in m, can be None
+    crater_depth: Optional[float]  # depth of crater created in m, can be None
+    z_breakup: Optional[
+        float
+    ]  # height at which asteroid begins breaks up in m, can be None
+    zb: Optional[
+        float
+    ]  # height at which the asteroid completely breaks apart in m, can be None
     r_effects: dict  # dictionary of effects at different distances from ground zero
 
     """
     r_effects includes:
 
     thermal_exposure: float, Thermal exposure in J/m^2
-    effective_magnitude: float, Effective magnitude
-    effective_mmi: string, MMI
-    ejecta_thickness: float, Ejecta thickness in m
-    mean_ejecta_size: float, Mean ejecta size in m
-    surface_blast: float, Peak blast overpressure in Pa 
+    effective_magnitude: float, Effective magnitude, can be None
+    effective_mmi: string, MMI, if none output -
+    ejecta_thickness: float, Ejecta thickness in m, can be None
+    mean_ejecta_size: float, Mean ejecta size in m, can be None
+    surface_blast: float, Peak blast overpressure in Pa
     peak_vel: float, Peak wind velocity in m/s
     """
 
