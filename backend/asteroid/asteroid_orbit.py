@@ -40,7 +40,8 @@ def get_nearest_earth_orbit():
 
 
 def get_orbit_earth_asteroid(id):
-    conn = sqlite3.connect("asteroid.db")
+    DB_PATH = os.path.join(os.path.dirname(__file__), "asteroid.db")
+    conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
     # Random asteroid
