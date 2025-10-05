@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://beusfuqifkgmo"]
+[gd_scene load_steps=34 format=4 uid="uid://beusfuqifkgmo"]
 
 [ext_resource type="Script" uid="uid://bk3lajrloe6g1" path="res://camera_rig.gd" id="1_a202f"]
 [ext_resource type="Texture2D" uid="uid://cdn1336aw1tjk" path="res://world.200410.3x5400x2700.png" id="1_noarx"]
@@ -65,27 +65,13 @@ corner_radius_top_right = 64
 corner_radius_bottom_right = 64
 corner_radius_bottom_left = 64
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5arm"]
-vertex_color_use_as_albedo = true
+[sub_resource type="Gradient" id="Gradient_4arys"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_i5arm"]
-material = SubResource("StandardMaterial3D_i5arm")
-
-[sub_resource type="Curve" id="Curve_i5arm"]
-_data = [Vector2(0, 0), 0.0, 11.9618, 0, 0, Vector2(0.0564972, 0.681097), 0.0, 0.0, 0, 0, Vector2(0.793785, 0.571669), -0.885425, -0.885425, 0, 0, Vector2(1, 0), -5.08269, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="Gradient" id="Gradient_wc5p8"]
-offsets = PackedFloat32Array(0.606667, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.249563, 0.134614, 6.01634e-08, 1)
-
-[sub_resource type="Gradient" id="Gradient_jsk3o"]
-colors = PackedColorArray(1, 0.619608, 0, 1, 0.779017, 0.253043, 0, 1)
-
-[sub_resource type="Curve" id="Curve_wc5p8"]
-_limits = [0.0, 200.0, 0.0, 1.0]
-_data = [Vector2(0, 200), 0.0, -203.448, 0, 1, Vector2(0.983051, 0), -203.448, 0.0, 1, 0]
-point_count = 2
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6iypd"]
+gradient = SubResource("Gradient_4arys")
+width = 213
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wc5p8"]
 albedo_color = Color(0.448712, 0.448712, 0.448712, 1)
@@ -149,12 +135,34 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_d8hjw")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5arm"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_i5arm"]
+material = SubResource("StandardMaterial3D_i5arm")
+
+[sub_resource type="Curve" id="Curve_i5arm"]
+_data = [Vector2(0, 0), 0.0, 11.9618, 0, 0, Vector2(0.0564972, 0.681097), 0.0, 0.0, 0, 0, Vector2(0.793785, 0.571669), -0.885425, -0.885425, 0, 0, Vector2(1, 0), -5.08269, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_wc5p8"]
+offsets = PackedFloat32Array(0.606667, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.249563, 0.134614, 6.01634e-08, 1)
+
+[sub_resource type="Gradient" id="Gradient_jsk3o"]
+colors = PackedColorArray(1, 0.619608, 0, 1, 0.779017, 0.253043, 0, 1)
+
+[sub_resource type="Curve" id="Curve_wc5p8"]
+_limits = [0.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 200), 0.0, -203.448, 0, 1, Vector2(0.983051, 0), -203.448, 0.0, 1, 0]
+point_count = 2
+
 [sub_resource type="Animation" id="Animation_jsk3o"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("RockRig/Icosphere:position")
+tracks/0/path = NodePath("RockRig/RockRig2/Icosphere:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -178,7 +186,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("RockRig/Icosphere:visible")
+tracks/2/path = NodePath("RockRig/RockRig2/Icosphere:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -218,14 +226,14 @@ length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("RockRig/Icosphere:position")
+tracks/0/path = NodePath("RockRig/RockRig2/Icosphere:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 5),
+"times": PackedFloat32Array(0.0333333, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 4), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 2.5), Vector3(0, 0, -1.5)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -234,7 +242,7 @@ tracks/1/path = NodePath("RockRig/CPUParticles3D:emitting")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(2.96667),
+"times": PackedFloat32Array(3.06667),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -242,7 +250,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("RockRig/Icosphere:visible")
+tracks/2/path = NodePath("RockRig/RockRig2/Icosphere:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -304,16 +312,17 @@ albedo_texture = ExtResource("3_a0tk4")
 [sub_resource type="PlaneMesh" id="PlaneMesh_jka67"]
 material = SubResource("StandardMaterial3D_r3fl7")
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animator", "rig")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animator", "rig", "rig2")]
 script = ExtResource("1_wc5p8")
 animator = NodePath("AnimationPlayer")
 rig = NodePath("RockRig")
+rig2 = NodePath("RockRig/RockRig2")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4xowi")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72945, 0)
+transform = Transform3D(0.781618, 0, 0.623757, 0, 1, 0, -0.623757, 0, 0.781618, 0, 1.72945, 0)
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 
@@ -329,11 +338,13 @@ skeleton = NodePath("../..")
 transform = Transform3D(3.0095, 0, 0, 0, 3.0095, 0, 0, 0, 3.0095, 0, 0, 0)
 shape = SubResource("SphereShape3D_a0tk4")
 
-[node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("camera")]
+[node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("camera", "ctrl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_a202f")
 speed = 10.0
 dampening = 3.0
 camera = NodePath("Camera3D")
+ctrl = NodePath("../Control")
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig" node_paths=PackedStringArray("marker", "control", "main")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
@@ -342,7 +353,7 @@ marker = NodePath("../../marker")
 control = NodePath("../../Control")
 main = NodePath("../..")
 
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("btn")]
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("btn", "bounding_box_angle", "slider", "indicator", "deglab", "main")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -351,6 +362,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("4_i5arm")
 btn = NodePath("Button")
+bounding_box_angle = NodePath("stufdap[fjklfhak")
+slider = NodePath("HSlider")
+indicator = NodePath("TextureRect2")
+deglab = NodePath("DegLabel")
+main = NodePath("..")
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 1
@@ -370,13 +386,16 @@ horizontal_alignment = 1
 [node name="Button" type="Button" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -303.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -323.0
+offset_top = -98.0
+offset_right = -64.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -391,6 +410,85 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_wc5p8")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jka67")
 text = "Launch Asteroid!"
 
+[node name="DegLabel2" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 192.0
+offset_top = -123.0
+offset_right = 374.0
+offset_bottom = -87.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.682353, 0.682353, 0.682353, 1)
+theme_override_font_sizes/font_size = 24
+text = "Angle of Impact"
+
+[node name="HSlider" type="HSlider" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = -80.0
+offset_right = 491.0
+offset_bottom = -64.0
+grow_vertical = 0
+max_value = 90.0
+step = 0.5
+value = 45.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = -138.0
+offset_right = 491.0
+offset_bottom = -132.0
+grow_vertical = 0
+texture = SubResource("GradientTexture1D_6iypd")
+
+[node name="DegLabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 245.0
+offset_top = -183.0
+offset_right = 372.0
+offset_bottom = -147.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "45.0°"
+horizontal_alignment = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 428.0
+offset_top = -138.0
+offset_right = 728.0
+offset_bottom = -132.0
+grow_vertical = 0
+rotation = -2.35619
+pivot_offset = Vector2(0, 3)
+texture = SubResource("GradientTexture1D_6iypd")
+
+[node name="stufdap[fjklfhak" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -196.0
+offset_right = 504.0
+grow_vertical = 0
+
 [node name="marker" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0722513, 0, 0, 0, 0.0722513, 0, 0, 0, 0.0722513, -0.358726, -0.205635, 1.51979)
 visible = false
@@ -402,6 +500,15 @@ texture = ExtResource("5_jka67")
 
 [node name="RockRig" type="Node3D" parent="."]
 transform = Transform3D(0.952911, 0, -0.303252, -0.0316563, 0.994536, -0.099474, 0.301595, 0.10439, 0.947704, 0, 0, 0)
+
+[node name="RockRig2" type="Node3D" parent="RockRig"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 1.5)
+
+[node name="Icosphere" type="MeshInstance3D" parent="RockRig/RockRig2"]
+transform = Transform3D(-0.00665404, -0.00158282, 0.0495299, -0.00514159, 0.0497268, 0.000898365, -0.0492878, -0.00497372, -0.00678044, 0, 0, 3.578)
+visible = false
+mesh = SubResource("ArrayMesh_4arys")
+skeleton = NodePath("")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="RockRig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5)
@@ -423,12 +530,6 @@ scale_amount_curve = SubResource("Curve_i5arm")
 color_ramp = SubResource("Gradient_wc5p8")
 color_initial_ramp = SubResource("Gradient_jsk3o")
 anim_speed_curve = SubResource("Curve_wc5p8")
-
-[node name="Icosphere" type="MeshInstance3D" parent="RockRig"]
-transform = Transform3D(0.00860591, 0, 0.0492538, 0, 0.05, 0, -0.0492538, 0, 0.00860591, 0, 0, 3.578)
-visible = false
-mesh = SubResource("ArrayMesh_4arys")
-skeleton = NodePath("")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

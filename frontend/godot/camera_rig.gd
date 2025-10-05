@@ -6,6 +6,7 @@ var mouse_pos : Vector2
 @export var speed : float = 100
 @export var dampening : float = 2.0
 @export var camera : Camera3D
+@export var ctrl : Ctrl 
 
 var vel : Vector2 = Vector2.ZERO
 
@@ -22,6 +23,9 @@ func _process(delta: float) -> void:
 	camera.position.z = max(1.75, camera.position.z)
 
 func _input(event: InputEvent) -> void:
+	if ctrl.on_control:
+		return
+
 	if !(event is InputEventMouse):
 		return
 
