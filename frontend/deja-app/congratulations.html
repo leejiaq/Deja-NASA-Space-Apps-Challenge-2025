@@ -1,1 +1,79 @@
-<h1>create as part of NASA Space Apps Challenge 2025</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deja Asteroid Simulator</title>
+    <link rel="stylesheet" href="src/style.css" />
+    <style>
+      #main-wrapper::-webkit-scrollbar {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- particles -->
+    <div class="fixed h-full w-full -z-50" id="particles-js"></div>
+
+    <!-- decorative elements -->
+    <div
+      class="-left-36 -top-40 fixed lg:-left-5 lg:-top-5 animate-pulse"
+      id="decor-1"
+    >
+      <div
+        class="w-64 h-64 rounded-full bg-[#9F2042] opacity-30 blur-2xl"
+      ></div>
+      <div
+        class="w-80 h-80 rounded-full bg-[#7B0D1E] relative z-10 opacity-30 -mt-24 ml-24 blur-2xl"
+      ></div>
+    </div>
+
+    <div
+      class="-right-20 -bottom-20 fixed lg:-right-10 lg:bottom-20 animate-pulse"
+      id="decor-2"
+    >
+      <div
+        class="w-80 h-80 rounded-full bg-[#9F2042] opacity-30 blur-2xl"
+      ></div>
+      <div
+        class="w-72 h-72 rounded-full bg-[#7B0D1E] relative z-10 opacity-30 -mt-24 -ml-24 blur-2xl"
+      ></div>
+    </div>
+
+    <section
+      id="wrapper"
+      class="flex items-center justify-center w-full h-screen flex-col"
+    >
+      <h1 class="text-4xl">Congratulations on finishing the simulation!</h1>
+      <p></p>
+      <a
+        href="/"
+        class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 flex gap-4"
+        ><span
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
+            /></svg></span
+        ><span>Try the simulation again!</span>
+      </a>
+      <p class="mt-10">Share the website if you find it helpful! </p>
+      <p class="mt-6">Created as part of NASA Space Apps Challenge 2025</p>
+      <img
+        src="public/NASA-space-apps-logo.png"
+        alt=""
+        class="mt-2"
+        width="300px"
+        height="auto"
+      />
+    </section>
+  </body>
+</html>
