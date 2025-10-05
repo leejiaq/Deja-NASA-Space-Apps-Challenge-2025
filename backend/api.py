@@ -2,9 +2,14 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from asteroid.asteroid_orbit import (
     propagate,
+    propagate_impulse,
     get_orbit_earth_asteroid,
 )
 from impact.impact import main as impact_main
+import numpy as np
+from astropy import units as u
+from astropy.time import Time
+from poliastro.twobody import Orbit
 
 app = FastAPI(title="Deja", description="Deja API", version="1.0.0")
 
@@ -41,6 +46,52 @@ class ImpactResponse(BaseModel):
     """
 
 
+class OrbitRequest(BaseModel):
+    id: int  # SPKID of an small body of interest
+
+
+class OrbitResponse(BaseModel):
+    earth_pos: list  # List of positions of the Earth,
+    # each element is in the form of [x, y, z] in km
+    asteroid_pos: list  # List of positions of the asteroid,
+    # each element is in the form of [x, y, z] in km
+
+
+class ImpulseRequest(BaseModel):
+    id: int  # SPKID of an small body of interest
+    v_delta: list  # a velocity vector in a form of [x, y, z] km/s
+    t: float  # time of the impulse maneuver in days
+
+
+class ImpulseResponse(BaseModel):
+    earth_pos: list  # List of positions of the Earth,
+    # each element is in the form of [x, y, z] in km
+    asteroid_pos: list  # List of positions of the asteroid,
+    # each element is in the form of [x, y, z] in km
+
+
+@app.post("/orbit", response_model=OrbitResponse)
+async def orbit(data: OrbitRequest):
+    orbit, earth_orbit = get_orbit_earth_asteroid(data.id)
+    earth_pos, asteroid_pos = propagate(earth_orbit, orbit, 730)
+    earth_pos = earth_pos.tolist()
+    asteroid_pos = asteroid_pos.tolist()
+
+    return OrbitResponse(earth_pos=earth_pos, asteroid_pos=asteroid_pos)
+
+
+@app.post("/impulse", response_model=ImpulseResponse)
+async def impulse(data: ImpulseRequest):
+    orbit, earth_orbit = get_orbit_earth_asteroid(data.id)
+    v_delta = np.array(data.v_delta) * u.km / u.s
+    t = data.t * u.day
+    earth_pos, asteroid_pos = propagate_impulse(earth_orbit, orbit, v_delta, t, 730)
+    earth_pos = earth_pos.tolist()
+    asteroid_pos = asteroid_pos.tolist()
+
+    return ImpulseResponse(earth_pos=earth_pos, asteroid_pos=asteroid_pos)
+
+
 @app.post("/impact", response_model=ImpactResponse)
 async def impact(data: ImpactRequest):
     (
@@ -65,11 +116,3 @@ async def impact(data: ImpactRequest):
         zb=zb,
         r_effects=r_effects,
     )
-
-
-def main():
-    pass
-
-
-if __name__ == "__main__":
-    main()
