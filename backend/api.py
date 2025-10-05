@@ -103,6 +103,7 @@ async def impulse(data: ImpulseRequest):
 
 @app.post("/impact", response_model=ImpactResponse)
 async def impact(data: ImpactRequest):
+    print(type(data), data)
     (
         E0,
         E_ground,
@@ -110,6 +111,7 @@ async def impact(data: ImpactRequest):
         v_ground,
         crater_diamater,
         crater_depth,
+        fball_radius,
         z_breakup,
         zb,
         r_effects,

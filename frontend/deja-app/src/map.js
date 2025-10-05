@@ -18,7 +18,7 @@ const data = {
 	v0: parseFloat(params.get("estimated_maximum_diameter")) / 3.6, // convert to m/s
 	T: 90.0,
 	Uj: 5515.3,
-}
+};
 
 fetch("http://localhost:8000/impact", {
 	method: "POST",
