@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deja Asteroid Simulator</title>
+    <title>Congratulations - Deja</title>
     <link rel="stylesheet" href="src/style.css" />
     <style>
       #main-wrapper::-webkit-scrollbar {
@@ -45,7 +45,9 @@
       class="flex items-center justify-center w-full h-screen flex-col"
     >
       <h1 class="text-4xl">Congratulations on finishing the simulation!</h1>
-      <p></p>
+      <p class="mt-2"
+        >Congratulations on saving the earth from Impactor-2025.</p
+      >
       <a
         href="/"
         class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 flex gap-4"
@@ -65,7 +67,7 @@
             /></svg></span
         ><span>Try the simulation again!</span>
       </a>
-      <p class="mt-10">Share the website if you find it helpful! </p>
+      <p class="mt-14">Share the website if you find it helpful! </p>
       <p class="mt-6">Created as part of NASA Space Apps Challenge 2025</p>
       <img
         src="public/NASA-space-apps-logo.png"
@@ -75,5 +77,38 @@
         height="auto"
       />
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <script>
+      const defaults = {
+        spread: 360,
+        ticks: 50,
+        gravity: 0,
+        decay: 0.94,
+        startVelocity: 30,
+        shapes: ["star"],
+        colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
+      };
+
+      function shoot() {
+        confetti({
+          ...defaults,
+          particleCount: 40,
+          scalar: 1.2,
+          shapes: ["star"],
+        });
+
+        confetti({
+          ...defaults,
+          particleCount: 10,
+          scalar: 0.75,
+          shapes: ["circle"],
+        });
+      }
+
+      setTimeout(shoot, 0);
+      setTimeout(shoot, 200);
+      setTimeout(shoot, 400);
+      setTimeout(shoot, 600);
+    </script>
   </body>
 </html>
