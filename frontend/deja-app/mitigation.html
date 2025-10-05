@@ -21,10 +21,10 @@
       id="decor-1"
     >
       <div
-        class="w-64 h-64 rounded-full bg-[#9F2042] opacity-70 blur-2xl"
+        class="w-64 h-64 rounded-full bg-[#9F2042] opacity-30 blur-2xl"
       ></div>
       <div
-        class="w-80 h-80 rounded-full bg-[#7B0D1E] relative z-10 opacity-70 -mt-24 ml-24 blur-2xl"
+        class="w-80 h-80 rounded-full bg-[#7B0D1E] relative z-10 opacity-30 -mt-24 ml-24 blur-2xl"
       ></div>
     </div>
 
@@ -33,17 +33,14 @@
       id="decor-2"
     >
       <div
-        class="w-80 h-80 rounded-full bg-[#9F2042] opacity-70 blur-2xl"
+        class="w-80 h-80 rounded-full bg-[#9F2042] opacity-30 blur-2xl"
       ></div>
       <div
-        class="w-72 h-72 rounded-full bg-[#7B0D1E] relative z-10 opacity-70 -mt-24 -ml-24 blur-2xl"
+        class="w-72 h-72 rounded-full bg-[#7B0D1E] relative z-10 opacity-30 -mt-24 -ml-24 blur-2xl"
       ></div>
     </div>
 
-    <section
-      class="h-screen w-full z-100 snap-center snap-always"
-      id="hero-wrapper"
-    >
+    <section class="h-screen w-full z-100 snap-center snap-always" id="hero">
       <div
         class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 rounded-2xl"
       >
@@ -56,32 +53,175 @@
           asteroid collision avoidance techniques studied or used by NASA.
         </p>
         <a
-          href="#story-wrapper"
+          href="#"
           class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110"
+          onclick="change('hero', 'slide2')"
           >Start</a
         >
       </div>
     </section>
+
     <section
-      class="h-screen w-full z-100 snap-center snap-always"
-      id="hero-wrapper"
+      class="h-screen w-full z-100 snap-center snap-always hidden"
+      id="slide2"
     >
       <div
         class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 rounded-2xl"
       >
-        <h1 class="font-bold text-4xl">Physicist Stephen Hawking</h1>
+        <h1 class="font-bold text-4xl"></h1>
         <p class="mt-6 text-center text-xl"
-          >in his final book, Brief Answers to the Big Questions, considered an
-          asteroid collision to be the biggest threat to the planet.
+          >Physicist Stephen Hawking, in his final book, Brief Answers to the
+          Big Questions, considered an asteroid collision to be the biggest
+          threat to the planet.
         </p>
         <div>
           <a
-            href="#story-wrapper"
+            href="#"
             class="ml-10 mt-10 px-8 py-4 border-slate-50 border text-slate-1 00 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide2','hero')"
             >Back</a
           >
           <a
-            href="#story-wrapper"
+            href="#"
+            class="ml-10 mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide2','slide3')"
+            >Next</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="h-screen w-full z-100 snap-center snap-always hidden"
+      id="slide3"
+    >
+      <div
+        class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 rounded-2xl"
+      >
+        <h1 class="font-bold text-4xl">Kinetic Impactor</h1>
+        <p class="mt-6 text-center text-2xl leading-10"
+          >Description: A spacecraft deliberately
+          <b>crashes into the asteroid at high speed</b>, nudging its orbit
+          slightly.<br />Impact: Even a <b>small velocity change</b> (fractions
+          of a cm/s) can<b> make the asteroid miss Earth</b> if applied years in
+          advance.<br />Key Point: Tested by <b>NASA's DART mission in 2022</b>,
+          showing real feasibility.
+        </p>
+        <div>
+          <a
+            href="#"
+            class="ml-10 mt-10 px-8 py-4 border-slate-50 border text-slate-1 00 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide3','slide2')"
+            >Back</a
+          >
+          <a
+            href="#"
+            class="ml-10 mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide3','slide4')"
+            >Next</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="h-screen w-full z-100 snap-center snap-always hidden"
+      id="slide4"
+    >
+      <div
+        class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 rounded-2xl"
+      >
+        <h1 class="font-bold text-4xl">Nuclear Detonation</h1>
+        <p class="mt-6 text-center text-2xl leading-10"
+          >Description: A nuclear device
+          <b>detonated near the asteroid vaporizes part of its surface</b>,
+          producing thrust that <b>pushes it off course</b>. <br />Impact:
+          Offers a much <b>stronger deflection</b> than a kinetic impactor,
+          making it effective even with shorter warning times.<br />Key Point:
+          Politically controversial, with
+          <b>risks of asteroid fragmentation</b>.
+        </p>
+        <div>
+          <a
+            href="#"
+            class="ml-10 mt-10 px-8 py-4 border-slate-50 border text-slate-1 00 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide4','slide3')"
+            >Back</a
+          >
+          <a
+            href="#"
+            class="ml-10 mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide4','slide5')"
+            >Next</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="h-screen w-full z-100 snap-center snap-always hidden"
+      id="slide5"
+    >
+      <div
+        class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 rounded-2xl"
+      >
+        <h1 class="font-bold text-4xl">Gravity Tractor</h1>
+        <p class="mt-6 text-center text-2xl leading-10"
+          >Description: A spacecraft hovers <b>close to the asteroid</b>, using
+          <b>its own gravitational pull</b> to slowly tug the asteroid onto a
+          <b>new trajectory.</b>
+
+          <br />Impact: <b>Requires many years or decades</b> to be effective,
+          but offers <b>precise, controlled deflection</b> without breaking up
+          the asteroid.
+
+          <br />Key Point: Gentle but <b>time-sensitive</b> method.
+        </p>
+        <div>
+          <a
+            href="#"
+            class="ml-10 mt-10 px-8 py-4 border-slate-50 border text-slate-1 00 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide5','slide4')"
+            >Back</a
+          >
+          <a
+            href="#"
+            class="ml-10 mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide5','slide6')"
+            >Next</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="h-screen w-full z-100 snap-center snap-always hidden"
+      id="slide5"
+    >
+      <div
+        class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 rounded-2xl"
+      >
+        <h1 class="font-bold text-4xl">Congratulations</h1>
+        <p class="mt-6 text-center text-2xl leading-10"
+          >Description: A spacecraft hovers <b>close to the asteroid</b>, using
+          <b>its own gravitational pull</b> to slowly tug the asteroid onto a
+          <b>new trajectory.</b>
+
+          <br />Impact: <b>Requires many years or decades</b> to be effective,
+          but offers <b>precise, controlled deflection</b> without breaking up
+          the asteroid.
+
+          <br />Key Point: Gentle but <b>time-sensitive</b> method.
+        </p>
+        <div>
+          <a
+            href="#"
+            class="ml-10 mt-10 px-8 py-4 border-slate-50 border text-slate-1 00 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
+            onclick="change('slide5','slide4')"
+            >Back</a
+          >
+          <a
+            href="./congratulations.html"
             class="ml-10 mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
             >Next</a
           >
