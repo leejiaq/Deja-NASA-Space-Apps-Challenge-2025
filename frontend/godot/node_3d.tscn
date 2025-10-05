@@ -275,6 +275,20 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"redirect"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4arys"]
 _data = {
@@ -307,7 +321,7 @@ shadow_enabled = true
 gravity_scale = 0.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Earth"]
-transform = Transform3D(1.63909, 0, 2.52398, 0, 3.0095, 0, -2.52398, 0, 1.63909, 0, 0, 0)
+transform = Transform3D(3.0095, 0, 0, 0, 3.0095, 0, 0, 0, 3.0095, 0, 0, 0)
 mesh = SubResource("SphereMesh_a202f")
 skeleton = NodePath("../..")
 

@@ -31,6 +31,9 @@ func _input(event: InputEvent) -> void:
 	
 			var lat = asin(dir.y)
 			var lon = atan2(dir.z, dir.x)
+			lon = ((-lon) - PI / 2)
+			if lon < -PI: lon = PI+fmod(lon, PI)
+			if lon > PI: lon = PI-fmod(lon, PI)
 
 			main.pos = Vector2(lat, lon)
 
