@@ -476,12 +476,13 @@ def main(L0, Ui, v0, T, Uj):
             effective_M = effective_magnitude(M, r)
             mmi = ricter_to_mmi[min(9, math.floor(max(float(0), effective_M)))]
 
-        thickness = ejecta_thickness(D_tc, r)
-        mean_size = mean_ejecta_size(crater_diamater, r)
+        if zb == 0:
+            thickness = ejecta_thickness(D_tc, r)
+            mean_size = mean_ejecta_size(crater_diamater, r)
         dist = scaled_dist(r, E)
         rm1 = (550 * scaled_dist(r, E)) / (1.2 * (550 - scaled_dist(r, E)))
         blast = 0.0
-        if (E_ground > E_air and dist < rm1) or zb == 0:
+        if (E_ground > E_air and dist < rm1) or z_star == 0:
             blast = surface_blast(dist)
         else:
             blast = airblast(dist, zb)
