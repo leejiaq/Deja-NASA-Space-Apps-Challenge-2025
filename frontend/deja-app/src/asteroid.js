@@ -108,7 +108,7 @@ fetch(
               href="/launch?id=${i}&date=${year}-${month}-${day}&close_approach_date=${
         fetchData.near_earth_objects[`${year}-${month}-${day}`][i]
           .close_approach_data[0].close_approach_date
-      }&estimated_maximum_distance=${fetchData.near_earth_objects[
+      }&estimated_maximum_diameter=${fetchData.near_earth_objects[
         `${year}-${month}-${day}`
       ][i].estimated_diameter.meters.estimated_diameter_max.toFixed(
         2
