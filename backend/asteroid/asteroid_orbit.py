@@ -2,7 +2,7 @@ from astropy import units as u
 from astropy.time import Time
 from poliastro.bodies import Sun, Earth
 from poliastro.twobody import Orbit
-from asteroid_load import update_db
+from asteroid.asteroid_load import update_db
 import random
 import sqlite3
 from dotenv import load_dotenv
