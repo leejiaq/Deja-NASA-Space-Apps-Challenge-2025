@@ -13,10 +13,60 @@
 
 		<!-- TODO: Attribute OSM -->
 
-		<div class="grid grid-cols-[1fr_240px] gap-5 h-full p-10">
-			<div id="map" class="h-full rounded-2xl"></div>
-			<div id="sidebar">
-				<h1 class="text-4xl font-bold text-center">Meteor Name</h1>
+		<div class="grid grid-cols-[1fr_320px] gap-5 h-full p-10 ">
+			<div id="map" class="h-full rounded-2xl hover:scale-[1.005_1.005] duration-200"></div>
+			<div id="sidebar" class="flex flex-col gap-5">
+				<div class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200">
+					<h1 class="text-4xl font-bold text-center" id="name">Meteor Name</h1>
+					<img src="/meteor.png" class="w-full">
+				</div>
+				<div class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200">
+					<h2 class="text-2xl font-light mb-2">Asteroid Properties</h2>
+					<div class="flex flex-row">
+						<div class="w-full">
+							<p class="mb-1"><b>Diameter</b></p>
+							<p class="mb-1"><b>Impact Velocity</b></p>
+							<p class="mb-1"><b>Impact Angle</b></p>
+						</div>
+						<div class="w-max text-right">
+							<p class="mb-1" id="diameter"></p>
+							<p class="mb-1" id="velocity"></p>
+							<p class="mb-1" id="angle">45°</p>
+						</div>
+					</div>
+				</div>
+				<div class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200">
+					<h2 class="text-2xl font-light">Impact Energy</h2>
+					<div class="flex flex-row">
+						<div class="w-full">
+							<p class="mb-1"><b>Impact Energy</b></p>
+							<p class="mb-1"><b>TNT Equivalent</b></p>
+							<p class="mb-1"><b>...also equivalent to</b></p>
+						</div>
+						<div class="w-max text-right">
+							<p class="mb-1" id="energy"></p>
+							<p class="mb-1" id="tnt"></p>
+							<p class="mb-1" id="hiroshima"></p>
+						</div>
+					</div>
+				</div>
+				<div class="rounded-2xl p-5 bg-[#ffffff10] border-b border-[#d1d1d1] backdrop-blur-sm hover:scale-[1.025_1.025] duration-200">
+					<h2 class="text-2xl font-light">Effects</h2>
+					<div class="flex flex-row">
+						<div class="w-full">
+							<p class="mb-1"><b>Crater Diameter</b></p>
+							<p class="mb-1"><b>Crater Depth</b></p>
+							<p class="mb-1"><b>Population Vapourised</b></p>
+						</div>
+						<div class="w-max text-right">
+							<p class="mb-1" id="craterdia"></p>
+							<p class="mb-1" id="craterdep"></p>
+							<p class="mb-1" id="population"></p>
+						</div>
+					</div>
+					<h2 class="text-2xl font-light">Effects due to Crater</h2>
+					r effects
+				</div>
 			</div>
 		</div>
 
