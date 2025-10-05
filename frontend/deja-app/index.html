@@ -47,15 +47,44 @@
           class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
         >
           <h1 class="font-bold text-4xl">Welcome to Deja!</h1>
-          <p class="mt-2 text-center"
-            >An interactive visualization of real life past and future meteor
-            impact.</p
+          <p class="mt-6 text-center text-xl"
+            >An interactive visualization incorporating a fictional scenario of
+            asteroid hitting the earth and real life data.</p
+          >
+          <a
+            href="#story-wrapper"
+            class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110"
+            >Start</a
+          >
+        </div>
+      </section>
+
+      <section
+        class="h-screen w-full z-100 p-10 snap-center snap-always"
+        id="story-wrapper"
+      >
+        <div
+          class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
+        >
+          <h1 class="font-bold text-4xl">Story</h1>
+          <p
+            id="story-1"
+            class="mt-6 text-center text-xl rounded-r-2xl rounded-bl-3xl p-4 bg-slate-200/20 animate-pulse"
+            >A newly identified near-Earth asteroid 🌠, "Impactor-2025," poses a
+            potential threat to Earth</p
+          >
+          <p
+            id="story-2"
+            class="mt-6 text-center text-xl rounded-r-2xl rounded-bl-3xl p-4 bg-slate-200/20 animate-pulse"
+            >Press <b>continue</b> to understand the impact of "Impactor-2025"
+            on Earth</p
           >
           <a
             href="#sel-wrapper"
             class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110"
-            >Start</a
+            >Continue</a
           >
+          <script></script>
         </div>
       </section>
 
@@ -67,15 +96,16 @@
         <div
           class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
         >
-          <h1 class="font-bold text-4xl">Please select</h1>
-          <p class="mt-2 text-center"
-            >An interactive visualization of real life past and future meteor
-            impact.</p
+          <h1 class="font-bold text-4xl"
+            >Please select an asteroid to simulate the attack</h1
+          >
+          <p class="mt-6 text-center text-xl"
+            >Select from 10 near earth asteroid.</p
           >
           <a
             href="select-asteroid.html"
             class="mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110"
-            >Start</a
+            >Select</a
           >
         </div>
       </section>
