@@ -37,7 +37,7 @@ fetch(
         >
           <!-- image -->
           <div class="flex flex-col justify-center items-center relative -z-10 pb-20 pt-10 px-10"
-            ><img src="meteor.png" alt="" style="scale: ${
+            ><img src="/public/meteor.png" alt="" style="scale: ${
               fetchData.near_earth_objects[`${year}-${month}-${day}`][i]
                 .estimated_diameter.meters.estimated_diameter_max / 500
             } ${
