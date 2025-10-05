@@ -31,8 +31,3 @@ uvicorn app:app --reload
 
 ## Other stuff
 **TO BE COMPLETED**
-```
-```
-```
-```
-```
