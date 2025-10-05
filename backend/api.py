@@ -53,11 +53,11 @@ class ImpactResponse(BaseModel):
     r_effects includes:
 
     thermal_exposure: float, Thermal exposure in J/m^2
-    effective_magnitude: float, Effective magnitude
-    effective_mmi: string, MMI
-    ejecta_thickness: float, Ejecta thickness in m
-    mean_ejecta_size: float, Mean ejecta size in m
-    surface_blast: float, Peak blast overpressure in Pa 
+    effective_magnitude: float, Effective magnitude, can be None
+    effective_mmi: string, MMI, if none output -
+    ejecta_thickness: float, Ejecta thickness in m, can be None
+    mean_ejecta_size: float, Mean ejecta size in m, can be None
+    surface_blast: float, Peak blast overpressure in Pa
     peak_vel: float, Peak wind velocity in m/s
     """
 
