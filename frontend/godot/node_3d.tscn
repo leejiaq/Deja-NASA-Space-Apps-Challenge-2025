@@ -353,7 +353,7 @@ marker = NodePath("../../marker")
 control = NodePath("../../Control")
 main = NodePath("../..")
 
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("btn", "bounding_box_angle", "slider", "indicator", "deglab", "main")]
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("btn", "slider", "indicator", "deglab", "main")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -362,7 +362,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("4_i5arm")
 btn = NodePath("Button")
-bounding_box_angle = NodePath("stufdap[fjklfhak")
 slider = NodePath("HSlider")
 indicator = NodePath("TextureRect2")
 deglab = NodePath("DegLabel")
@@ -479,15 +478,6 @@ grow_vertical = 0
 rotation = -2.35619
 pivot_offset = Vector2(0, 3)
 texture = SubResource("GradientTexture1D_6iypd")
-
-[node name="stufdap[fjklfhak" type="Control" parent="Control"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -196.0
-offset_right = 504.0
-grow_vertical = 0
 
 [node name="marker" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0722513, 0, 0, 0, 0.0722513, 0, 0, 0, 0.0722513, -0.358726, -0.205635, 1.51979)
