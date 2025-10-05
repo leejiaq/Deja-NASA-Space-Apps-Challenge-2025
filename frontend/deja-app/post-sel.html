@@ -40,11 +40,11 @@
     >
       <!-- hero wrapper -->
       <section
-        class="h-screen w-full z-100 p-10 snap-center snap-always"
+        class="h-screen w-full z-100 snap-center snap-always"
         id="hero-wrapper"
       >
         <div
-          class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
+          class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
         >
           <h1 class="font-bold text-4xl">Welcome to Deja!</h1>
           <p class="mt-6 text-center text-xl"
@@ -60,11 +60,11 @@
       </section>
 
       <section
-        class="h-screen w-full z-100 p-10 snap-center snap-always"
+        class="h-screen w-full z-100 snap-center snap-always"
         id="story-wrapper"
       >
         <div
-          class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
+          class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
         >
           <h1 class="font-bold text-4xl">Story</h1>
           <p
@@ -93,11 +93,11 @@
       </section>
 
       <section
-        class="h-screen w-full z-100 p-10 snap-center snap-always"
+        class="h-screen w-full z-100 snap-center snap-always"
         id="story2-wrapper"
       >
         <div
-          class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
+          class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
         >
           <h1 class="font-bold text-4xl">Mission Briefing</h1>
           <p
@@ -131,15 +131,14 @@
 
       <!-- selection wrapper -->
       <section
-        class="h-screen w-full z-100 p-10 snap-center snap-always"
+        class="h-screen w-full z-100 snap-center snap-always"
         id="sel-wrapper"
       >
         <div
-          class="flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
+          class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
         >
           <h1 class="font-bold text-4xl">Selected asteroid</h1>
-          <div id="selected-asteroid"></div>
-          <script src="src/selected-asteroid.js"></script>
+          <div id="selected-asteroid" class="h-2/3"></div>
           <div>
             <a
               href="./select-asteroid.html"
@@ -147,11 +146,42 @@
               >Re-select</a
             >
             <a
-              href="select-asteroid.html"
+              href="#launch-wrapper"
               class="ml-10 mt-10 px-8 py-4 bg-slate-50 text-slate-800 rounded-4xl hover:scale-125 duration-100 focus:scale-110 inline-block"
               >Confirm</a
             ></div
           >
+        </div>
+      </section>
+
+      <!-- launch wrapper-->
+      <section
+        class="h-screen w-full z-100 snap-center snap-always"
+        id="launch-wrapper"
+      >
+        <div
+          class="p-4 flex items-center justify-center w-full h-full flex-col bg-slate-50/5 backdrop-blur-md rounded-2xl"
+        >
+          <h1 class="font-bold text-4xl">Prepare for launch simulation</h1>
+          <div class="mt-10">Asteroid: <span id="asteroid-namu"></span></div>
+          <img src="meteor.png" alt="" class="h-[300px] mt-10" />
+
+          <a
+            href="#selected-asteroid"
+            class="mt-10 px-8 py-4 border-slate-50 border text-white rounded-4xl hover:scale-125 duration-100 focus:scale-110"
+            >View Details</a
+          >
+          <a
+            href="#"
+            class="mt-5 px-8 py-4 bg-rose-700 text-slate-100 rounded-4xl hover:scale-125 duration-100 focus:scale-110 text-xl"
+            id="launch-href"
+            >PREPARE FOR LAUNCH</a
+          >
+          <script>
+            const urlSearch = window.location.search;
+            console.log(urlSearch);
+            document.getElementById("launch-href").href = "launch/" + urlSearch;
+          </script>
         </div>
       </section>
     </div>
@@ -161,5 +191,6 @@
     <!-- stats.js lib -->
     <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
     <script src="src/particles.js"></script>
+    <script src="src/selected-asteroid.js"></script>
   </body>
 </html>

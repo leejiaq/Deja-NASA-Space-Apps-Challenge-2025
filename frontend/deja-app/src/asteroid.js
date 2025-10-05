@@ -33,10 +33,10 @@ fetch(
     for (let i = 0; i < 10; i++) {
       wrapper.innerHTML += `
         <div
-          class="carousel-cell mt-10 grid bg-[#ffffff10] grid-cols-2 gap-5 p-10 rounded-4xl border-b border-[#d1d1d1] h-[600px] backdrop-blur-sm w-full hover:scale-[1.05_1.05] duration-200"
+          class="carousel-cell mt-10 grid bg-[#ffffff10] lg:grid-cols-2 gap-5 p-10 rounded-4xl border-b border-[#d1d1d1] lg:h-[600px] backdrop-blur-sm w-full hover:scale-[1.05_1.05] duration-200"
         >
           <!-- image -->
-          <div class="flex flex-col justify-center items-center relative -z-10"
+          <div class="flex flex-col justify-center items-center relative -z-10 pb-20 pt-10 px-10"
             ><img src="meteor.png" alt="" style="scale: ${
               fetchData.near_earth_objects[`${year}-${month}-${day}`][i]
                 .estimated_diameter.meters.estimated_diameter_max / 500
